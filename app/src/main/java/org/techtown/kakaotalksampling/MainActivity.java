@@ -13,11 +13,21 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+    FriendFragment friendFragment;
+    ChatFragment chatFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        friendFragment = new FriendFragment();
+        chatFragment = new ChatFragment();
+        //
+        //
+        //
+        //
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,friendFragment).commit();
 
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(
@@ -26,21 +36,33 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.friendTab:
+                                getSupportFragmentManager().beginTransaction().replace(R.id.container,friendFragment).commit();
+
                                 return true;
 
                             case R.id.chatTab:
+                                getSupportFragmentManager().beginTransaction().replace(R.id.container,chatFragment).commit();
+
                                 return true;
 
                             case R.id.viewTab:
+                                //getSupportFragmentManager().beginTransaction().replace(R.id.container,friendFragment).commit();
+
                                 return true;
 
                             case R.id.shoppingTab:
+                                //getSupportFragmentManager().beginTransaction().replace(R.id.container,friendFragment).commit();
+
                                 return true;
 
                             case R.id.moreTab:
+                                //getSupportFragmentManager().beginTransaction().replace(R.id.container,friendFragment).commit();
+
                                 return true;
 
                             case R.id.scaleTab:
+                                //getSupportFragmentManager().beginTransaction().replace(R.id.container,friendFragment).commit();
+
                                 return true;
                         }
                         return false;
