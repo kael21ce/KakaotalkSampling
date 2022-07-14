@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
                             case R.id.moreTab:
                                 return true;
-                                
+
                             case R.id.scaleTab:
                                 return true;
                         }
