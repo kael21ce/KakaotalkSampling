@@ -9,6 +9,7 @@
         android:id="@+id/MyProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
         android:orientation="horizontal">
 
         <ImageView
