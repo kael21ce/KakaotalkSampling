@@ -1,7 +1,322 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:orientation="vertical"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/kakaoPayLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F7E600"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/payTopLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/walletButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#F7E600"
+                android:backgroundTintMode="add"
+                android:text="지갑 >"
+                android:textColor="#000000"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:iconPadding="0dp" />
+
+            <Button
+                android:id="@+id/authButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="240dp"
+                android:layout_marginTop="0dp"
+                android:backgroundTint="#F7E600"
+                android:backgroundTintMode="add"
+                android:paddingStart="16dp"
+                android:paddingTop="0dp"
+                android:text="인증서"
+                android:textColor="#000000" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/paySecLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/bannerButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="#FAF4EC"
+                android:text="지구를 위한 습관, 전자증명서"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/payThiLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/payButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#F7E600"
+                android:text="KakaoPay"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/balanceButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:layout_marginStart="110dp"
+                android:gravity="right"
+                android:text="My Balance"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/payBottomLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/sendButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#F7E600"
+                android:backgroundTintMode="add"
+                android:text="송금"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/credButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="결제"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/moneyButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="자산"
+                android:textColor="#000000" />
+
+            <View
+                android:id="@+id/chunk"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/listButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="구매내역"
+                android:textColor="#000000" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TableLayout
+        android:id="@+id/buttonsTable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0,1,2,3">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/presentButton"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="선물하기"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/shopButton"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="쇼핑하기"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/makersButton"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="메이커스"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/friendButton"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="프렌즈"
+                android:textColor="#000000" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/emoticonButton"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="이모티콘"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/deskButton"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="톡서랍"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/mailButton"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="메일"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/calanderButton"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="캘린더"
+                android:textColor="#000000" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/gameButton"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="게임"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/fashionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="패션"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/orderButton"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="주문하기"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/melonButton"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="멜론티켓"
+                android:textColor="#000000" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/mapButton"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="카카오맵"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/openchattingButton"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="오픈채팅"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/cardButton"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="톡명함"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/wholeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="전체서비스"
+                android:textColor="#000000" />
+
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:id="@+id/weatherLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"></LinearLayout>
 </LinearLayout>
