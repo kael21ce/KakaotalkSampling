@@ -15,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
     FriendFragment friendFragment;
     ChatFragment chatFragment;
+    MoreFragment moreFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         chatFragment = new ChatFragment();
         //
         //
-        //
+        moreFragment = new MoreFragment();
         //
         getSupportFragmentManager().beginTransaction().replace(R.id.container,friendFragment).commit();
 
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                                 return true;
 
                             case R.id.moreTab:
-                                //getSupportFragmentManager().beginTransaction().replace(R.id.container,friendFragment).commit();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.container,moreFragment).commit();
 
                                 return true;
 
