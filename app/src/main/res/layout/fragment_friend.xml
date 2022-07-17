@@ -36,7 +36,7 @@
                 android:id="@+id/myName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="MyName"
+                android:text="장형준"
                 android:textColor="#000000"
                 android:textSize="30sp" />
 
@@ -44,7 +44,7 @@
                 android:id="@+id/myState"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="my state message" />
+                android:text=":)" />
         </LinearLayout>
     </LinearLayout>
 
