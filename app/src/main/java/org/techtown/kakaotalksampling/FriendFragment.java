@@ -1,5 +1,7 @@
 package org.techtown.kakaotalksampling;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ public class FriendFragment extends Fragment {
     TextView numFriend;
     LinearLayout MyProfile;
     public static final int REQUEST_CODE_MYPROFILE=101;
+    public static final int REQUEST_CODE_FPROFILE=102;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -47,6 +50,16 @@ public class FriendFragment extends Fragment {
         friendAdapter.addItem(new Friend("이창민", ""));
         friendAdapter.addItem(new Friend("남민석", "갓생을 살아보자"));
         friendAdapter.addItem(new Friend("이은성", ""));
+
+        friendAdapter.setOnItemClickListener(new FriendAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClicked(int position, String name, String fstate) {
+                Intent profileIntent = new Intent(v.getContext(), FriendprofileActivity.class);
+                profileIntent.putExtra("name", name);
+                profileIntent.putExtra("fstate", fstate);
+                startActivityForResult(profileIntent, REQUEST_CODE_FPROFILE);
+            }
+        });
 
         Integer n=friendAdapter.getItemCount();
         numFriend.setText("친구 "+n);

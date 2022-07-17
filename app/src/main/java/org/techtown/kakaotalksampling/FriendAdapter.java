@@ -13,13 +13,39 @@ import java.util.ArrayList;
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
     ArrayList<Friend> items = new ArrayList<Friend>();
 
+    public interface OnItemClickListener {
+        void onItemClicked(int position, String name, String fstate);
+    }
+
+    private OnItemClickListener itemClickListener;
+
+    public void setOnItemClickListener (OnItemClickListener listener) {
+        itemClickListener=listener;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View itemView = inflater.inflate(R.layout.friend_item, viewGroup, false);
 
-        return new ViewHolder(itemView);
+        FriendAdapter.ViewHolder viewHolder = new FriendAdapter.ViewHolder(itemView);
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name="";
+                String fstate="";
+                int position = viewHolder.getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    name=viewHolder.getFriendName().getText().toString();
+                    fstate=viewHolder.getFstateMessage().getText().toString();
+                }
+                itemClickListener.onItemClicked(position, name, fstate);
+            }
+        });
+
+        return viewHolder;
     }
 
     @Override
@@ -48,6 +74,14 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         public void setItem(Friend item) {
             friendName.setText(item.getName());
             fstateMessage.setText(item.getStateMessage());
+        }
+
+        public TextView getFriendName() {
+            return friendName;
+        }
+
+        public TextView getFstateMessage() {
+            return fstateMessage;
         }
     }
 
