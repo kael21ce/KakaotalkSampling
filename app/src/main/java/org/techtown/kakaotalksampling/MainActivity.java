@@ -31,19 +31,23 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.friendTab:
-                                getSupportFragmentManager().beginTransaction().replace(R.id.container,friendFragment).commit();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                                        friendFragment).commit();
 
                                 return true;
                             case R.id.chatTab:
-                                getSupportFragmentManager().beginTransaction().replace(R.id.container,chatFragment).commit();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                                        chatFragment).commit();
 
                                 return true;
                             case R.id.moreTab:
-                                getSupportFragmentManager().beginTransaction().replace(R.id.container,moreFragment).commit();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                                        moreFragment).commit();
 
                                 return true;
                             case R.id.scaleTab:
-                                getSupportFragmentManager().beginTransaction().replace(R.id.container,friendFragment).commit();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                                        friendFragment).commit();
 
                                 return true;
                         }
