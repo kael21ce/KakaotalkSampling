@@ -2,13 +2,9 @@ package org.techtown.kakaotalksampling;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
+
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -24,14 +20,12 @@ public class MainActivity extends AppCompatActivity {
 
         friendFragment = new FriendFragment();
         chatFragment = new ChatFragment();
-        //
-        //
         moreFragment = new MoreFragment();
         //
         getSupportFragmentManager().beginTransaction().replace(R.id.container,friendFragment).commit();
 
-        BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(
+        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -40,29 +34,16 @@ public class MainActivity extends AppCompatActivity {
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container,friendFragment).commit();
 
                                 return true;
-
                             case R.id.chatTab:
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container,chatFragment).commit();
 
                                 return true;
-
-                            case R.id.viewTab:
-                                //getSupportFragmentManager().beginTransaction().replace(R.id.container,friendFragment).commit();
-
-                                return true;
-
-                            case R.id.shoppingTab:
-                                //getSupportFragmentManager().beginTransaction().replace(R.id.container,friendFragment).commit();
-
-                                return true;
-
                             case R.id.moreTab:
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container,moreFragment).commit();
 
                                 return true;
-
                             case R.id.scaleTab:
-                                //getSupportFragmentManager().beginTransaction().replace(R.id.container,friendFragment).commit();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.container,friendFragment).commit();
 
                                 return true;
                         }
