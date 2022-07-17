@@ -14,7 +14,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
     ArrayList<Chat> items=new ArrayList<Chat>();
 
     public interface OnItemClickListener {
-        void onItemClicked(int position, String name);
+        void onItemClicked(int position, String name, String last_message, String date);
     }
 
     private OnItemClickListener itemClickListener;
@@ -30,7 +30,25 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View itemView = inflater.inflate(R.layout.chat_item, viewGroup, false);
 
-        return new ViewHolder(itemView);
+        ChatAdapter.ViewHolder viewHolder = new ChatAdapter.ViewHolder(itemView);
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name="";
+                String last_message="";
+                String date="";
+                int position = viewHolder.getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    name=items.get(position).getName();
+                    last_message=items.get(position).getLast_message();
+                    date=items.get(position).getDate();
+                }
+                itemClickListener.onItemClicked(position, name, last_message, date);
+            }
+        });
+
+        return viewHolder;
     }
 
     @Override

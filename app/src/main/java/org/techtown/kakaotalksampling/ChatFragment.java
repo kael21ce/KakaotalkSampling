@@ -34,8 +34,10 @@ public class ChatFragment extends Fragment {
 
         chatAdapter.setOnItemClickListener(new ChatAdapter.OnItemClickListener() {
             @Override
-            public void onItemClicked(int position, String name) {
-                Toast.makeText(v.getContext(), " ", Toast.LENGTH_SHORT).show();
+            public void onItemClicked(int position, String name, String last_message, String date) {
+                Intent chatIntent = new Intent(v.getContext(), ChatActivity.class);
+                chatIntent.putExtra("name",name);
+                startActivity(chatIntent);
             }
         });
 
