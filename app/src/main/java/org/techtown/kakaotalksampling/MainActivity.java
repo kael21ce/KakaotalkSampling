@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     FriendFragment friendFragment;
     ChatFragment chatFragment;
     MoreFragment moreFragment;
+    ScaleFragment scaleFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         friendFragment = new FriendFragment();
         chatFragment = new ChatFragment();
         moreFragment = new MoreFragment();
-        //
+        scaleFragment = new ScaleFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.container,friendFragment).commit();
 
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                                 return true;
                             case R.id.scaleTab:
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container,
-                                        friendFragment).commit();
+                                        scaleFragment).commit();
 
                                 return true;
                         }
