@@ -13,6 +13,17 @@ import java.util.ArrayList;
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
     ArrayList<Chat> items=new ArrayList<Chat>();
 
+    public interface OnItemClickListener {
+        void onItemClicked(int position, String name);
+    }
+
+    private OnItemClickListener itemClickListener;
+
+    public void setOnItemClickListener (OnItemClickListener listener) {
+        itemClickListener = listener;
+    }
+
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
