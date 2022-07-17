@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -54,10 +55,11 @@ public class FriendFragment extends Fragment {
         friendAdapter.setOnItemClickListener(new FriendAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(int position, String name, String fstate) {
+                //Toast.makeText(v.getContext(), name+"\n"+fstate, Toast.LENGTH_SHORT).show();
                 Intent profileIntent = new Intent(v.getContext(), FriendprofileActivity.class);
                 profileIntent.putExtra("name", name);
                 profileIntent.putExtra("fstate", fstate);
-                startActivityForResult(profileIntent, REQUEST_CODE_FPROFILE);
+                startActivity(profileIntent);
             }
         });
 

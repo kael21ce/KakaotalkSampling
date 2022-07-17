@@ -38,8 +38,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 String fstate="";
                 int position = viewHolder.getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
-                    name=viewHolder.getFriendName().getText().toString();
-                    fstate=viewHolder.getFstateMessage().getText().toString();
+                    name=items.get(position).getName();
+                    fstate=items.get(position).getStateMessage();
                 }
                 itemClickListener.onItemClicked(position, name, fstate);
             }
@@ -74,14 +74,6 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         public void setItem(Friend item) {
             friendName.setText(item.getName());
             fstateMessage.setText(item.getStateMessage());
-        }
-
-        public TextView getFriendName() {
-            return friendName;
-        }
-
-        public TextView getFstateMessage() {
-            return fstateMessage;
         }
     }
 
