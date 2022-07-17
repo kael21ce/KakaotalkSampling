@@ -3,12 +3,41 @@ package org.techtown.kakaotalksampling;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int curId = item.getItemId();
+        switch (curId) {
+            case R.id.menu_search:
+                Toast.makeText(this, "검색", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menu_friendplus:
+                Toast.makeText(this, "친구추가", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menu_music:
+                Toast.makeText(this, "뮤직", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menu_setting:
+                Toast.makeText(this, "설정", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     FriendFragment friendFragment;
     ChatFragment chatFragment;
     MoreFragment moreFragment;
