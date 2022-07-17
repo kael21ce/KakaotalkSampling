@@ -13,23 +13,30 @@
         android:focusable="true"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/myProfile"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/myProfileContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:maxWidth="80dp"
-            android:maxHeight="80dp"
-            android:paddingStart="0dp"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/default_profile" />
+            app:cardCornerRadius="10dp">
+
+            <ImageView
+                android:id="@+id/myProfile"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:maxWidth="80dp"
+                android:maxHeight="80dp"
+                android:paddingStart="0dp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/my_profile" />
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:id="@+id/verFor2Text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
             android:orientation="vertical">
 
             <TextView
