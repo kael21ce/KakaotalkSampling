@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         scaleFragment = new ScaleFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.container,friendFragment).commit();
         abar.setTitle("친구");
-        abar.setTitle(Html.fromHtml("<font color='#000000'>ActionBarTitle </font>"));
+        abar.setTitle(Html.fromHtml("<font color='#FF000000'>ActionBarTitle </font>"));
 
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(

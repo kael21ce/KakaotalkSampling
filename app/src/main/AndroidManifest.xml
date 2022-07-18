@@ -27,7 +27,8 @@
             android:label="나의 프로필" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:label="친구">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
