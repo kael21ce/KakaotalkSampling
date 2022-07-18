@@ -37,7 +37,13 @@ public class ChatActivity extends AppCompatActivity {
         Intent intent = getIntent();
         fName.setText(intent.getStringExtra("name"));
 
-        chatting();
+        Button sendButton = findViewById(R.id.send);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chatting();
+            }
+        });
     }
 
     public void chatting() {
