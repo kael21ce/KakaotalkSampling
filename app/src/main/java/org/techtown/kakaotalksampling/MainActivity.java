@@ -1,16 +1,23 @@
 package org.techtown.kakaotalksampling;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+
+    ActionBar abar;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -48,11 +55,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        abar = getSupportActionBar();
+
         friendFragment = new FriendFragment();
         chatFragment = new ChatFragment();
         moreFragment = new MoreFragment();
         scaleFragment = new ScaleFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.container,friendFragment).commit();
+        abar.setTitle("친구");
+        abar.setTitle(Html.fromHtml("<font color='#000000'>ActionBarTitle </font>"));
 
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(
@@ -63,21 +74,25 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.friendTab:
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container,
                                         friendFragment).commit();
+                                abar.setTitle("친구");
 
                                 return true;
                             case R.id.chatTab:
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container,
                                         chatFragment).commit();
+                                abar.setTitle("채팅");
 
                                 return true;
                             case R.id.moreTab:
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container,
                                         moreFragment).commit();
+                                abar.setTitle("더보기");
 
                                 return true;
                             case R.id.scaleTab:
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container,
                                         scaleFragment).commit();
+                                abar.setTitle("저울");
 
                                 return true;
                         }
