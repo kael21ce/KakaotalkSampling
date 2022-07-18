@@ -6,7 +6,7 @@
         android:title="친구"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@android:drawable/ic_dialog_info"
+        android:icon="@drawable/person"
     />
 
     <item
@@ -14,7 +14,7 @@
         android:title="채팅"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@android:drawable/ic_dialog_email"
+        android:icon="@drawable/chat"
         />
 
     <item
@@ -22,7 +22,7 @@
         android:title="더보기"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@android:drawable/ic_dialog_alert"
+        android:icon="@android:drawable/ic_dialog_dialer"
         />
 
     <item
@@ -30,7 +30,7 @@
         android:title="저울"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@android:drawable/ic_dialog_dialer"
+        android:icon="@drawable/scale"
         />
 
 
