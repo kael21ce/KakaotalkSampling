@@ -1,6 +1,32 @@
 package org.techtown.kakaotalksampling;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+
 public class Friend {
+    public Friend(String name, String stateMessage, String mobile, Bitmap profile) {
+        this.name = name;
+        this.stateMessage = stateMessage;
+        this.mobile = mobile;
+        this.profile = profile;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public Bitmap getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Bitmap profile) {
+        this.profile = profile;
+    }
+
     public String getName() {
         return name;
     }
@@ -17,11 +43,8 @@ public class Friend {
         this.stateMessage = stateMessage;
     }
 
-    public Friend(String name, String stateMessage) {
-        this.name = name;
-        this.stateMessage = stateMessage;
-    }
-
     String name;
     String stateMessage;
+    String mobile;
+    Bitmap profile;
 }

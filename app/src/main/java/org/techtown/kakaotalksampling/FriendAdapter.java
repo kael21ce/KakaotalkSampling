@@ -3,6 +3,7 @@ package org.techtown.kakaotalksampling;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -63,17 +64,20 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView friendName;
         TextView fstateMessage;
+        ImageView profile;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             friendName=itemView.findViewById(R.id.fName);
             fstateMessage=itemView.findViewById(R.id.fstateMessage);
+            profile=itemView.findViewById(R.id.friendProfile);
         }
 
         public void setItem(Friend item) {
             friendName.setText(item.getName());
             fstateMessage.setText(item.getStateMessage());
+            profile.setImageBitmap(item.getProfile());
         }
     }
 

@@ -3,6 +3,7 @@ package org.techtown.kakaotalksampling;
 import static android.app.Activity.RESULT_OK;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,17 +46,22 @@ public class FriendFragment extends Fragment {
         friendRecycler.setLayoutManager(layoutManager);
         FriendAdapter friendAdapter = new FriendAdapter();
 
-        friendAdapter.addItem(new Friend("강지원", ""));
-        friendAdapter.addItem(new Friend("김시은", "peaches"));
-        friendAdapter.addItem(new Friend("유소현", ""));
-        friendAdapter.addItem(new Friend("이창민", ""));
-        friendAdapter.addItem(new Friend("남민석", "갓생을 살아보자"));
-        friendAdapter.addItem(new Friend("이은성", ""));
+        friendAdapter.addItem(new Friend("강지원(21)", "", "010-7599-2001",
+                BitmapFactory.decodeResource(getResources(), R.drawable.default_profile)));
+        friendAdapter.addItem(new Friend("김시은(21)", "peaches", "010-7637-4041",
+                BitmapFactory.decodeResource(getResources(), R.drawable.default_profile)));
+        friendAdapter.addItem(new Friend("유소현(21)", "", "010-5031-6394",
+                BitmapFactory.decodeResource(getResources(), R.drawable.default_profile)));
+        friendAdapter.addItem(new Friend("이창민(ulala)", "", "010-6551-5413",
+                BitmapFactory.decodeResource(getResources(), R.drawable.default_profile)));
+        friendAdapter.addItem(new Friend("남민석(ulala)", "갓생을 살아보자", "010-2908-9023",
+                BitmapFactory.decodeResource(getResources(), R.drawable.default_profile)));
+        friendAdapter.addItem(new Friend("이은성(ulala)", "", "010-6767-3243",
+                BitmapFactory.decodeResource(getResources(), R.drawable.default_profile)));
 
         friendAdapter.setOnItemClickListener(new FriendAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(int position, String name, String fstate) {
-                //Toast.makeText(v.getContext(), name+"\n"+fstate, Toast.LENGTH_SHORT).show();
                 Intent profileIntent = new Intent(v.getContext(), FriendprofileActivity.class);
                 profileIntent.putExtra("name", name);
                 profileIntent.putExtra("fstate", fstate);
