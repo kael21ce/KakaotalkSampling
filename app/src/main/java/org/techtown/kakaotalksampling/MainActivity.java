@@ -18,10 +18,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     ActionBar abar;
-    DatabaseHelper dbHelper;
-    SQLiteDatabase database;
-
-    String tableName;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -59,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        createDatabase("FaceDb");
-        //createTable("Friend");
 
         abar = getSupportActionBar();
 
@@ -108,26 +102,6 @@ public class MainActivity extends AppCompatActivity {
 
                 }
         );
-    }
-    private void createDatabase(String name) {
-        dbHelper = new DatabaseHelper(this);
-        database = dbHelper.getWritableDatabase();
-    }
-
-    private void insertRecord(String nm, String stateM, String m, String lastM,
-                              String lastD) {
-        if (database==null) {
-            Toast.makeText(this, "데이터베이스를 먼저 생성하세요", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (tableName==null) {
-            Toast.makeText(this, "테이블을 먼저 생성하세요", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        database.execSQL("insert into "+tableName+"(name, stateMessage, mobile, lastMessage, lastDate) "+
-                " values "+
-                "( nm, stateM, m, lastM, lastD)");
     }
 
 }

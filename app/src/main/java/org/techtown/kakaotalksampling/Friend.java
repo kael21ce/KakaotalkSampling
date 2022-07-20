@@ -1,9 +1,11 @@
 package org.techtown.kakaotalksampling;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
 public class Friend {
+
     public Friend(String name, String stateMessage, String mobile) {
         this.name = name;
         this.stateMessage = stateMessage;
