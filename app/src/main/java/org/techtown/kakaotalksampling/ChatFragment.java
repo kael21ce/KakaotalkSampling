@@ -1,6 +1,7 @@
 package org.techtown.kakaotalksampling;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,8 +22,6 @@ public class ChatFragment extends Fragment {
         View v= inflater.inflate(R.layout.fragment_chat, container, false);
 
         RecyclerView chatRecycler = v.findViewById(R.id.chatRecycler);
-
-        SQLiteDatabase database = FriendFragment.database;
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(v.getContext(), LinearLayoutManager.VERTICAL, false);
         chatRecycler.setLayoutManager(layoutManager);
