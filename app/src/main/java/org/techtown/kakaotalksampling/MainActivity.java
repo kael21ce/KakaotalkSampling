@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
@@ -17,6 +18,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     ActionBar abar;
+
+    SQLiteDatabase database;
+
+    String tableName;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -54,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        createDatabase("FaceDb");
+        createTable("Friend");
 
         abar = getSupportActionBar();
 
@@ -102,4 +109,37 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
     }
+    private void createDatabase(String name) {
+        database = openOrCreateDatabase(name, MODE_PRIVATE, null);
+    }
+
+    private void createTable(String name) {
+        if (database==null) {
+            Toast.makeText(this, "데이터베이스를 먼저 생성하세요", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        database.execSQL("create table if not exists "+ name + "(" + " name text, " +
+                " stateMessage text, " +
+                " mobile text, " +
+                " lastMessage text, " +
+                " lastDate text)");
+    }
+
+    private void insertRecord(String nm, String stateM, String m, String lastM,
+                              String lastD) {
+        if (database==null) {
+            Toast.makeText(this, "데이터베이스를 먼저 생성하세요", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (tableName==null) {
+            Toast.makeText(this, "테이블을 먼저 생성하세요", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        database.execSQL("insert into "+tableName+"(name, stateMessage, mobile, lastMessage, lastDate) "+
+                " values "+
+                "( nm, stateM, m, lastM, lastD)");
+    }
+
 }
