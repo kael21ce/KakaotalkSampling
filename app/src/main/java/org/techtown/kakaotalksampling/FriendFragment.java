@@ -27,8 +27,8 @@ public class FriendFragment extends Fragment {
     public static final int REQUEST_CODE_MYPROFILE=101;
     public static final int REQUEST_CODE_FPROFILE=102;
 
-    DatabaseHelper dbHelper;
-    SQLiteDatabase database;
+    public static DatabaseHelper dbHelper;
+    public static SQLiteDatabase database;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
