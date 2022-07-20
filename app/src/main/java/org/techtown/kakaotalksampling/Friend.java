@@ -4,11 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
 public class Friend {
-    public Friend(String name, String stateMessage, String mobile, Bitmap profile) {
+    public Friend(String name, String stateMessage, String mobile) {
         this.name = name;
         this.stateMessage = stateMessage;
         this.mobile = mobile;
-        this.profile = profile;
     }
 
     public String getMobile() {
@@ -17,14 +16,6 @@ public class Friend {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
-    }
-
-    public Bitmap getProfile() {
-        return profile;
-    }
-
-    public void setProfile(Bitmap profile) {
-        this.profile = profile;
     }
 
     public String getName() {
@@ -46,5 +37,4 @@ public class Friend {
     String name;
     String stateMessage;
     String mobile;
-    Bitmap profile;
 }

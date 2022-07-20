@@ -114,19 +114,6 @@ public class MainActivity extends AppCompatActivity {
         database = dbHelper.getWritableDatabase();
     }
 
-    //private void createTable(String name) {
-        //if (database==null) {
-            //Toast.makeText(this, "데이터베이스를 먼저 생성하세요", Toast.LENGTH_SHORT).show();
-            //return;
-        //}
-
-        //database.execSQL("create table if not exists "+ name + "(" + " name text, " +
-                //" stateMessage text, " +
-                //" mobile text, " +
-                //" lastMessage text, " +
-                //" lastDate text)");
-    //}
-
     private void insertRecord(String nm, String stateM, String m, String lastM,
                               String lastD) {
         if (database==null) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
+import android.widget.Toast;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static String NAME = "Friend.db";
@@ -29,6 +30,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (newVersion>1) {
             db.execSQL("DROP TABLE IF EXISTS Friend");
         }
+    }
+
+    private void insertRecord(SQLiteDatabase db, String nm, String stateM, String m, String lastM,
+                              String lastD) {
+
+        db.execSQL("insert into Friend"+"(name, stateMessage, mobile, lastMessage, lastDate) "+
+                " values "+
+                "( nm, stateM, m, lastM, lastD)");
     }
 
     //pubic void println(String data)
