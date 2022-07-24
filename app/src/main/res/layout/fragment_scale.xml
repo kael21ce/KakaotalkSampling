@@ -31,6 +31,12 @@
             android:text="TextView" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/showAbsContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

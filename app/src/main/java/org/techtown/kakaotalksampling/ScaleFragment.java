@@ -29,6 +29,7 @@ public class ScaleFragment extends Fragment {
     TextView listCalling;
     TextView incoming;
     TextView outgoing;
+    TextView absContact;
 
     SimpleDateFormat simpleDateFormat;
     Integer numIncoming = 0;
@@ -42,6 +43,7 @@ public class ScaleFragment extends Fragment {
         listCalling = v.findViewById(R.id.callLogs);
         incoming = v.findViewById(R.id.incomingNum);
         outgoing = v.findViewById(R.id.outgoingNum);
+        absContact = v.findViewById(R.id.showAbsContact);
 
         calling.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +53,7 @@ public class ScaleFragment extends Fragment {
                 numOutgoing = getOutgoingNum("01067673243");
                 incoming.setText("수신: " + numIncoming.toString());
                 outgoing.setText("발신: " + numOutgoing.toString());
+                absContact.setText("연락 횟수 차: "+betContact("01067673243"));
 
                 numOutgoing = 0;
                 numIncoming = 0;
@@ -196,4 +199,16 @@ public class ScaleFragment extends Fragment {
         c.close();
         return numOutgoing;
     }
+
+    //입력된 연락처와의 연락 수 차이 가져오기
+    public int betContact(String mobile) {
+        numOutgoing = 0;
+        numIncoming = 0;
+
+        int numI = getIncomingNum(mobile);
+        int numO = getOutgoingNum(mobile);
+
+        return numI-numO;
+    }
+
 }
