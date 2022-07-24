@@ -14,11 +14,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase db) {
-        String sql = "create table if not exists Friend(" + " name text, " +
-                " stateMessage text, " +
-                " mobile text, " +
-                " lastMessage text, " +
-                " lastDate text)";
+        String sql = "create table if not exists Friend("
+                + " name text, "
+                + " stateMessage text, "
+                + " mobile text, "
+                + " lastMessage text, "
+                + " lastDate text)";
 
         db.execSQL(sql);
     }

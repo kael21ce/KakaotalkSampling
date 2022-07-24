@@ -68,10 +68,10 @@ public class FriendFragment extends Fragment {
                 + "('남민석(ulala)', '갓생을 살아보자', '010-2908-9023', '', '')");
         database.execSQL("insert into Friend" + "(name, stateMessage, mobile, lastMessage, lastDate) "
                 + " values "
-                + "('이은성(ulala)', '갓생을 살아보자', '010-6767-3243', '', '')");
+                + "('이은성(ulala)', '', '010-6767-3243', '', '')");
 
         //커서 객체 생성
-        Cursor cursor = database.rawQuery("select name, stateMessage, mobile", null);
+        Cursor cursor = database.rawQuery("select name, stateMessage, mobile from Friend", null);
         int recordCount = cursor.getCount();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(v.getContext(), LinearLayoutManager.VERTICAL, false);
