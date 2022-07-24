@@ -32,25 +32,6 @@ public class ScaleFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_scale, container, false);
 
-        AndPermission.with(this)
-                .runtime()
-                .permission(Permission.READ_CALL_LOG, Permission.READ_CONTACTS)
-                .onGranted(new Action<List<String>>() {
-                    @Override
-                    public void onAction(List<String> permissions) {
-                        Toast.makeText(v.getContext(), "허용된 권한 개수: "+permissions.size(),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .onDenied(new Action<List<String>>() {
-                    @Override
-                    public void onAction(List<String> permissions) {
-                        Toast.makeText(v.getContext(), "거부된 권한 개수: "+permissions.size(),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .start();
-
         calling = v.findViewById(R.id.callCall);
         listCalling = v.findViewById(R.id.callLogs);
 

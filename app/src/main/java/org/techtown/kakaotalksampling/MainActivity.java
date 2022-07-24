@@ -14,6 +14,11 @@ import android.widget.Toolbar;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,6 +60,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.READ_CALL_LOG, Permission.READ_CONTACTS)
+                .onGranted(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> permissions) {
+                        Toast.makeText(MainActivity.this, "허용된 권한 개수"+permissions.size(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .onDenied(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> permissions) {
+                        Toast.makeText(MainActivity.this, "거부된 권한 개수"+permissions.size(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .start();
 
         abar = getSupportActionBar();
 
