@@ -17,12 +17,15 @@ import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ScaleFragment extends Fragment {
 
     Button calling;
     TextView listCalling;
+    SimpleDateFormat simpleDateFormat;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -74,8 +77,8 @@ public class ScaleFragment extends Fragment {
         c.moveToFirst();
         do{
             long callDate = c.getLong(0);
-            SimpleDateFormat datePattern = new SimpleDateFormat("yyyy-MM-dd : E요일 : HH:mm:ss");
-            String date_str = datePattern.format(new Date(callDate));
+            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd : E요일 : HH:mm:ss");
+            String date_str = simpleDateFormat.format(new Date(callDate));
 
             callBuff.append(date_str + " : ");
 
