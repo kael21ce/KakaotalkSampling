@@ -77,7 +77,6 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         public void setItem(Friend item) {
             friendName.setText(item.getName());
             fstateMessage.setText(item.getStateMessage());
-            profile.setImageBitmap(item.getProfile());
         }
     }
 
