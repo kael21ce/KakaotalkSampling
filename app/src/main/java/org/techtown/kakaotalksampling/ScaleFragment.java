@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.database.Cursor;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -66,7 +67,8 @@ public class ScaleFragment extends Fragment {
     public String getCallHistory() {
         String[] callSet = new String[] { CallLog.Calls.DATE, CallLog.Calls.TYPE, CallLog.Calls.NUMBER,
                 CallLog.Calls.DURATION };
-        Cursor c = getContentResolver().query(CallLog.Calls.CONTENT_URI, callSet, null, null, null);
+        Cursor c = getActivity().getContentResolver().query(CallLog.Calls.CONTENT_URI,
+                callSet, null, null, null);
 
         if ( c == null)
         {
