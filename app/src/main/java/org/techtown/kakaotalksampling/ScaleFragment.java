@@ -27,7 +27,12 @@ public class ScaleFragment extends Fragment {
 
     Button calling;
     TextView listCalling;
+    TextView incoming;
+    TextView outgoing;
+
     SimpleDateFormat simpleDateFormat;
+    Integer numIncoming = 0;
+    Integer numOutgoing = 0;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -35,17 +40,26 @@ public class ScaleFragment extends Fragment {
 
         calling = v.findViewById(R.id.callCall);
         listCalling = v.findViewById(R.id.callLogs);
+        incoming = v.findViewById(R.id.incomingNum);
+        outgoing = v.findViewById(R.id.outgoingNum);
 
         calling.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listCalling.setText(getCallHistory("01029089023"));
+                listCalling.setText(getCallHistory("01067673243"));
+                numIncoming = getIncomingNum("01067673243");
+                numOutgoing = getOutgoingNum("01067673243");
+                incoming.setText("수신: " + numIncoming.toString());
+                outgoing.setText("발신: " + numOutgoing.toString());
             }
         });
 
         return v;
     }
 
+
+
+    //Method For Scale
     public String getCallHistory(String mobile) {
         String[] callSet = new String[] { CallLog.Calls.DATE, CallLog.Calls.TYPE, CallLog.Calls.NUMBER,
                 CallLog.Calls.DURATION };
@@ -102,5 +116,77 @@ public class ScaleFragment extends Fragment {
         }
         c.close();
         return callBuff.toString();
+    }
+
+    public int getIncomingNum(String mobile) {
+        String[] callSet = new String[] { CallLog.Calls.DATE, CallLog.Calls.TYPE, CallLog.Calls.NUMBER,
+                CallLog.Calls.DURATION };
+        Cursor c = getActivity().getContentResolver().query(CallLog.Calls.CONTENT_URI,
+                callSet, null, null, null);
+
+        if ( c == null)
+        {
+            return 0;
+        }
+
+        int recordCount = c.getCount();
+        c.moveToFirst();
+
+        for (int i =0; i< recordCount; i++) {
+
+            String lMobile = c.getString(2);
+
+            if (lMobile.equals(mobile)) {
+                if (c.getInt(1) == CallLog.Calls.INCOMING_TYPE)
+                {
+                    numIncoming = numIncoming + 1;
+                }
+                else
+                {
+                    numIncoming = numIncoming;
+                }
+                c.moveToNext();
+            } else {
+                c.moveToNext();
+            }
+        }
+        c.close();
+        return numIncoming;
+    }
+
+    public int getOutgoingNum(String mobile) {
+        String[] callSet = new String[] { CallLog.Calls.DATE, CallLog.Calls.TYPE, CallLog.Calls.NUMBER,
+                CallLog.Calls.DURATION };
+        Cursor c = getActivity().getContentResolver().query(CallLog.Calls.CONTENT_URI,
+                callSet, null, null, null);
+
+        if ( c == null)
+        {
+            return 0;
+        }
+
+        int recordCount = c.getCount();
+        c.moveToFirst();
+
+        for (int i =0; i< recordCount; i++) {
+
+            String lMobile = c.getString(2);
+
+            if (lMobile.equals(mobile)) {
+                if (c.getInt(1) == CallLog.Calls.OUTGOING_TYPE)
+                {
+                    numOutgoing = numOutgoing + 1;
+                }
+                else
+                {
+                    numOutgoing = numOutgoing;
+                }
+                c.moveToNext();
+            } else {
+                c.moveToNext();
+            }
+        }
+        c.close();
+        return numOutgoing;
     }
 }

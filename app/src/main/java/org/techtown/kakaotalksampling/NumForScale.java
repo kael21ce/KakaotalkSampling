@@ -12,6 +12,8 @@ import java.util.Date;
 public class NumForScale extends AppCompatActivity {
 
     SimpleDateFormat simpleDateFormat;
+    Integer numIncoming = 0;
+    Integer numOutgoing = 0;
 
     public String getCallHistory(String mobile) {
         String[] callSet = new String[] { CallLog.Calls.DATE, CallLog.Calls.TYPE, CallLog.Calls.NUMBER,
@@ -70,4 +72,78 @@ public class NumForScale extends AppCompatActivity {
         c.close();
         return callBuff.toString();
     }
+
+    public int getIncomingNum(String mobile) {
+        String[] callSet = new String[] { CallLog.Calls.DATE, CallLog.Calls.TYPE, CallLog.Calls.NUMBER,
+                CallLog.Calls.DURATION };
+        Cursor c = getContentResolver().query(CallLog.Calls.CONTENT_URI,
+                callSet, null, null, null);
+
+        if ( c == null)
+        {
+            return 0;
+        }
+
+        int recordCount = c.getCount();
+        c.moveToFirst();
+
+        for (int i =0; i< recordCount; i++) {
+
+            String lMobile = c.getString(2);
+
+            if (lMobile.equals(mobile)) {
+                if (c.getInt(1) == CallLog.Calls.INCOMING_TYPE)
+                {
+                    numIncoming = numIncoming + 1;
+                }
+                else
+                {
+                    numIncoming = numIncoming;
+                }
+                c.moveToNext();
+            } else {
+                c.moveToNext();
+            }
+        }
+        c.close();
+        return numIncoming;
+    }
+
+    public int getOutgoingNum(String mobile) {
+        String[] callSet = new String[] { CallLog.Calls.DATE, CallLog.Calls.TYPE, CallLog.Calls.NUMBER,
+                CallLog.Calls.DURATION };
+        Cursor c = getContentResolver().query(CallLog.Calls.CONTENT_URI,
+                callSet, null, null, null);
+
+        if ( c == null)
+        {
+            return 0;
+        }
+
+        int recordCount = c.getCount();
+        c.moveToFirst();
+
+        for (int i =0; i< recordCount; i++) {
+
+            String lMobile = c.getString(2);
+
+            if (lMobile.equals(mobile)) {
+                if (c.getInt(1) == CallLog.Calls.OUTGOING_TYPE)
+                {
+                    numOutgoing = numOutgoing + 1;
+                }
+                else
+                {
+                    numOutgoing = numIncoming;
+                }
+                c.moveToNext();
+            } else {
+                c.moveToNext();
+            }
+        }
+        c.close();
+        return numOutgoing;
+    }
+
+
 }
