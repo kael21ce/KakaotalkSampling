@@ -51,6 +51,9 @@ public class ScaleFragment extends Fragment {
                 numOutgoing = getOutgoingNum("01067673243");
                 incoming.setText("수신: " + numIncoming.toString());
                 outgoing.setText("발신: " + numOutgoing.toString());
+
+                numOutgoing = 0;
+                numIncoming = 0;
             }
         });
 
@@ -60,6 +63,7 @@ public class ScaleFragment extends Fragment {
 
 
     //Method For Scale
+    //입력된 연락처의 정보 가져오기
     public String getCallHistory(String mobile) {
         String[] callSet = new String[] { CallLog.Calls.DATE, CallLog.Calls.TYPE, CallLog.Calls.NUMBER,
                 CallLog.Calls.DURATION };
@@ -118,6 +122,7 @@ public class ScaleFragment extends Fragment {
         return callBuff.toString();
     }
 
+    //입력된 연락처로부터 수신된 횟수 가져오기
     public int getIncomingNum(String mobile) {
         String[] callSet = new String[] { CallLog.Calls.DATE, CallLog.Calls.TYPE, CallLog.Calls.NUMBER,
                 CallLog.Calls.DURATION };
@@ -154,6 +159,8 @@ public class ScaleFragment extends Fragment {
         return numIncoming;
     }
 
+
+    //입력된 연락처에게 발신한 횟수 가져오기
     public int getOutgoingNum(String mobile) {
         String[] callSet = new String[] { CallLog.Calls.DATE, CallLog.Calls.TYPE, CallLog.Calls.NUMBER,
                 CallLog.Calls.DURATION };
