@@ -1,31 +1,30 @@
 package org.techtown.kakaotalksampling;
 
-import static android.app.Activity.RESULT_OK;
+
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.BitmapFactory;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
+
 
 public class FriendFragment extends Fragment {
     TextView numFriend;
     LinearLayout MyProfile;
     public static final int REQUEST_CODE_MYPROFILE=101;
-    public static final int REQUEST_CODE_FPROFILE=102;
 
     DatabaseHelper dbHelper;
     SQLiteDatabase database;
@@ -52,12 +51,24 @@ public class FriendFragment extends Fragment {
         database = dbHelper.getWritableDatabase();
 
         //레코드 추가
-        insertRecord("강지원(21)", "", "010-7599-2001", "", "");
-        insertRecord("김시은(21)", "peaches", "010-7637-4041", "", "");
-        insertRecord("유소현(21)", "", "010-5031-6394", "", "");
-        insertRecord("이창민(ulala)", "", "010-6551-5413", "", "");
-        insertRecord("남민석(ulala)", "갓생을 살아보자", "010-2908-9023", "", "");
-        insertRecord("이은성(ulala)", "", "010-6767-3243", "", "");
+        database.execSQL("insert into Friend" + "(name, stateMessage, mobile, lastMessage, lastDate) "
+                + " values "
+                + "('강지원(20)', '', '010-7599-2001', '', '')");
+        database.execSQL("insert into Friend" + "(name, stateMessage, mobile, lastMessage, lastDate) "
+                + " values "
+                + "('김시은(21)', 'peaches', '010-7637-4041', '', '')");
+        database.execSQL("insert into Friend" + "(name, stateMessage, mobile, lastMessage, lastDate) "
+                + " values "
+                + "('유소현(21)', '', '010-5031-6394', '', '')");
+        database.execSQL("insert into Friend" + "(name, stateMessage, mobile, lastMessage, lastDate) "
+                + " values "
+                + "('이창민(ulala)', '', '010-6551-5413', '', '')");
+        database.execSQL("insert into Friend" + "(name, stateMessage, mobile, lastMessage, lastDate) "
+                + " values "
+                + "('남민석(ulala)', '갓생을 살아보자', '010-2908-9023', '', '')");
+        database.execSQL("insert into Friend" + "(name, stateMessage, mobile, lastMessage, lastDate) "
+                + " values "
+                + "('이은성(ulala)', '갓생을 살아보자', '010-6767-3243', '', '')");
 
         //커서 객체 생성
         Cursor cursor = database.rawQuery("select name, stateMessage, mobile", null);
@@ -93,13 +104,6 @@ public class FriendFragment extends Fragment {
 
 
         return v;
-    }
-
-    private void insertRecord(String nm, String stateM, String m, String lastM,
-                              String lastD) {
-        database.execSQL("insert into Friend"+"(name, stateMessage, mobile, lastMessage, lastDate) "+
-                " values "+
-                "( nm, stateM, m, lastM, lastD)");
     }
 
 }
