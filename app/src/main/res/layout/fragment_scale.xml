@@ -11,12 +11,24 @@
         android:backgroundTint="#9C27B0"
         android:text="call callLog" />
 
-    <TextView
-        android:id="@+id/callLogs"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:text="준비 중..."
-        android:textColor="#000000"
-        android:textSize="25sp" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/callLogs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="준비 중..."
+                android:textColor="#000000"
+                android:textSize="25sp" />
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>
