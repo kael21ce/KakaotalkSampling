@@ -53,12 +53,12 @@ public class ScaleFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //listCalling.setText(getCallHistory("01067673243"));
-                numIncoming = getIncomingNum("01067673243");
-                numOutgoing = getOutgoingNum("01067673243");
+                numIncoming = getIncomingNum("01029089023");
+                numOutgoing = getOutgoingNum("01029089023");
                 incoming.setText("수신: " + numIncoming.toString());
                 outgoing.setText("발신: " + numOutgoing.toString());
-                absContact.setText("연락 횟수 차: "+betContact("01067673243"));
-                rotateScale("01067673243");
+                absContact.setText("연락 횟수 차: "+betContact("01029089023"));
+                rotateScale("01029089023");
 
                 numOutgoing = 0;
                 numIncoming = 0;
@@ -136,6 +136,8 @@ public class ScaleFragment extends Fragment {
                 CallLog.Calls.DURATION };
         Cursor c = getActivity().getContentResolver().query(CallLog.Calls.CONTENT_URI,
                 callSet, null, null, null);
+        long now = System.currentTimeMillis();
+        long weekago = now - 604800000;
 
         if ( c == null)
         {
@@ -150,18 +152,21 @@ public class ScaleFragment extends Fragment {
             String lMobile = c.getString(2);
 
             if (lMobile.equals(mobile)) {
-                if (c.getInt(1) == CallLog.Calls.INCOMING_TYPE)
-                {
-                    numIncoming = numIncoming + 1;
+                if (c.getLong(0)>=weekago) {
+                    if (c.getInt(1) == CallLog.Calls.INCOMING_TYPE)
+                    {
+                        numIncoming = numIncoming + 1;
+                    }
+                    else
+                    {
+                        numIncoming = numIncoming;
+                    }
+                    c.moveToNext();
+                    } else {
+                    c.moveToNext();
+                    }
                 }
-                else
-                {
-                    numIncoming = numIncoming;
-                }
-                c.moveToNext();
-            } else {
-                c.moveToNext();
-            }
+
         }
         c.close();
         return numIncoming;
@@ -175,6 +180,9 @@ public class ScaleFragment extends Fragment {
         Cursor c = getActivity().getContentResolver().query(CallLog.Calls.CONTENT_URI,
                 callSet, null, null, null);
 
+        long now = System.currentTimeMillis();
+        long weekago = now - 604800000;
+
         if ( c == null)
         {
             return 0;
@@ -188,18 +196,21 @@ public class ScaleFragment extends Fragment {
             String lMobile = c.getString(2);
 
             if (lMobile.equals(mobile)) {
-                if (c.getInt(1) == CallLog.Calls.OUTGOING_TYPE)
-                {
-                    numOutgoing = numOutgoing + 1;
+                if (c.getLong(0)>=weekago) {
+                    if (c.getInt(1) == CallLog.Calls.OUTGOING_TYPE)
+                    {
+                        numOutgoing = numOutgoing + 1;
+                    }
+                    else
+                    {
+                        numOutgoing = numOutgoing;
+                    }
+                    c.moveToNext();
+                } else {
+                    c.moveToNext();
                 }
-                else
-                {
-                    numOutgoing = numOutgoing;
-                }
-                c.moveToNext();
-            } else {
-                c.moveToNext();
             }
+
         }
         c.close();
         return numOutgoing;
