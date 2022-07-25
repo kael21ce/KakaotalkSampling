@@ -37,6 +37,7 @@ public class ScaleFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.fragment_scale, container, false);
 
         calling = v.findViewById(R.id.callCall);
@@ -60,7 +61,7 @@ public class ScaleFragment extends Fragment {
             }
         });
 
-        return v;
+        return new ScaleItem(getActivity());
     }
 
 

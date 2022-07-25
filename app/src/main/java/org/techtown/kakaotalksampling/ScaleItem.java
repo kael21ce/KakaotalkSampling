@@ -1,6 +1,7 @@
 package org.techtown.kakaotalksampling;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -13,25 +14,10 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 public class ScaleItem extends View {
-    @Override
-    public void addChildrenForAccessibility(ArrayList<View> outChildren) {
-        super.addChildrenForAccessibility(outChildren);
-    }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-
-        Path path = new Path();
-        path.moveTo(75, 50);
-        path.lineTo(150, 50);
-        path.lineTo(112, 10);
-        path.close();
-
-        canvas.drawPath(path, paint);
-    }
-
-    private Paint paint;
+    private Bitmap cacheBitmap;
+    private Canvas cacheCanvas;
+    private Paint mPaint;
 
     public ScaleItem(Context context) {
         super(context);
@@ -46,8 +32,48 @@ public class ScaleItem extends View {
     }
 
     private void init(Context context) {
-        paint = new Paint();
-        paint.setColor(Color.BLACK);
+        mPaint = new Paint();
 
     }
+
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        createCacheBitmap(w, h);
+        testDrawing();
+    }
+
+    private void createCacheBitmap(int w, int h) {
+        cacheBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        cacheCanvas = new Canvas();
+        cacheCanvas.setBitmap(cacheBitmap);
+    }
+
+    private void testDrawing() {
+        cacheCanvas.drawColor(Color.WHITE);
+        mPaint.setColor(Color.BLACK);
+
+        Path path = new Path();
+        path.moveTo(75, 200);
+        path.lineTo(325, 200);
+        path.lineTo(200, 10);
+        path.close();
+
+        cacheCanvas.drawPath(path, mPaint);
+    }
+
+
+
+
+    @Override
+    public void addChildrenForAccessibility(ArrayList<View> outChildren) {
+        super.addChildrenForAccessibility(outChildren);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        if (cacheBitmap!=null) {
+            canvas.drawBitmap(cacheBitmap, 0, 0, null);
+        }
+    }
+
+
 }
