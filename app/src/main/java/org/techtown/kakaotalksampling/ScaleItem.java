@@ -52,8 +52,8 @@ public class ScaleItem extends View {
         mPaint.setColor(Color.BLACK);
 
         Path path = new Path();
-        path.moveTo(75, 200);
-        path.lineTo(325, 200);
+        path.moveTo(75, 400);
+        path.lineTo(325, 400);
         path.lineTo(200, 10);
         path.close();
 

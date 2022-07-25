@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.database.Cursor;
@@ -26,10 +27,11 @@ import java.util.List;
 public class ScaleFragment extends Fragment {
 
     Button calling;
-    TextView listCalling;
+    //TextView listCalling;
     TextView incoming;
     TextView outgoing;
     TextView absContact;
+    ImageView scaleHead;
 
     SimpleDateFormat simpleDateFormat;
     Integer numIncoming = 0;
@@ -41,27 +43,29 @@ public class ScaleFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_scale, container, false);
 
         calling = v.findViewById(R.id.callCall);
-        listCalling = v.findViewById(R.id.callLogs);
         incoming = v.findViewById(R.id.incomingNum);
         outgoing = v.findViewById(R.id.outgoingNum);
         absContact = v.findViewById(R.id.showAbsContact);
+        scaleHead = v.findViewById(R.id.scaleHead);
+
 
         calling.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listCalling.setText(getCallHistory("01067673243"));
+                //listCalling.setText(getCallHistory("01067673243"));
                 numIncoming = getIncomingNum("01067673243");
                 numOutgoing = getOutgoingNum("01067673243");
                 incoming.setText("수신: " + numIncoming.toString());
                 outgoing.setText("발신: " + numOutgoing.toString());
                 absContact.setText("연락 횟수 차: "+betContact("01067673243"));
+                rotateScale("01067673243");
 
                 numOutgoing = 0;
                 numIncoming = 0;
             }
         });
 
-        return new ScaleItem(getActivity());
+        return v;
     }
 
 
@@ -210,6 +214,22 @@ public class ScaleFragment extends Fragment {
         int numO = getOutgoingNum(mobile);
 
         return numI-numO;
+    }
+
+    //저울 회전
+    public void rotateScale(String mobile) {
+        int bet = betContact(mobile);
+        if (bet >=0 && bet < 10) {
+            int angle = 4*bet;
+            scaleHead.setRotation(angle);
+        } else if (bet >=10) {
+            scaleHead.setRotation(45);
+        } else if (bet<0 && bet>-10) {
+            int angle = 4*bet;
+            scaleHead.setRotation(angle);
+        } else if (bet <=-10) {
+            scaleHead.setRotation(-45);
+        }
     }
 
 }
