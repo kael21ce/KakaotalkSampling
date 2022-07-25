@@ -52,13 +52,13 @@ public class ScaleFragment extends Fragment {
         calling.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //listCalling.setText(getCallHistory("01067673243"));
-                numIncoming = getIncomingNum("01029089023");
-                numOutgoing = getOutgoingNum("01029089023");
+                //listCalling.setText(getCallHistory("01065515413"));
+                numIncoming = getIncomingNum("01056099441");
+                numOutgoing = getOutgoingNum("01056099441");
                 incoming.setText("수신: " + numIncoming.toString());
                 outgoing.setText("발신: " + numOutgoing.toString());
-                absContact.setText("연락 횟수 차: "+betContact("01029089023"));
-                rotateScale("01029089023");
+                absContact.setText("연락 횟수 차: "+betContact("01056099441"));
+                rotateScale("01056099441");
 
                 numOutgoing = 0;
                 numIncoming = 0;
@@ -153,17 +153,19 @@ public class ScaleFragment extends Fragment {
 
             if (lMobile.equals(mobile)) {
                 if (c.getLong(0)>=weekago) {
-                    if (c.getInt(1) == CallLog.Calls.INCOMING_TYPE)
-                    {
-                        numIncoming = numIncoming + 1;
-                    }
-                    else
-                    {
-                        numIncoming = numIncoming;
-                    }
-                    c.moveToNext();
-                    } else {
-                    c.moveToNext();
+                    if (Integer.parseInt(c.getString(3))>=20) {
+                        if (c.getInt(1) == CallLog.Calls.INCOMING_TYPE)
+                        {
+                            numIncoming = numIncoming + 1;
+                        }
+                        else
+                        {
+                            numIncoming = numIncoming;
+                        }
+                        c.moveToNext();
+                        } else {
+                            c.moveToNext();
+                        }
                     }
                 }
 
@@ -197,18 +199,20 @@ public class ScaleFragment extends Fragment {
 
             if (lMobile.equals(mobile)) {
                 if (c.getLong(0)>=weekago) {
-                    if (c.getInt(1) == CallLog.Calls.OUTGOING_TYPE)
-                    {
-                        numOutgoing = numOutgoing + 1;
+                    if (Integer.parseInt(c.getString(3))>=20) {
+                        if (c.getInt(1) == CallLog.Calls.OUTGOING_TYPE)
+                        {
+                            numOutgoing = numOutgoing + 1;
+                        }
+                        else
+                        {
+                            numOutgoing = numOutgoing;
+                        }
+                        c.moveToNext();
+                        } else {
+                            c.moveToNext();
+                        }
                     }
-                    else
-                    {
-                        numOutgoing = numOutgoing;
-                    }
-                    c.moveToNext();
-                } else {
-                    c.moveToNext();
-                }
             }
 
         }

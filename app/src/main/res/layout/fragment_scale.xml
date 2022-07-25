@@ -66,8 +66,12 @@
             android:text="나"
             android:textColor="#000000"
             android:textSize="20sp"
-            tools:layout_editor_absoluteX="129dp"
-            tools:layout_editor_absoluteY="503dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.339"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.81" />
 
         <TextView
             android:id="@+id/yourText"
@@ -76,8 +80,12 @@
             android:text="상대방"
             android:textColor="#000000"
             android:textSize="20sp"
-            tools:layout_editor_absoluteX="248dp"
-            tools:layout_editor_absoluteY="503dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.701"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.809" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
