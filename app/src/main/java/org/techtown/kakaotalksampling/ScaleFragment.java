@@ -1,5 +1,6 @@
 package org.techtown.kakaotalksampling;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.CallLog;
@@ -32,6 +33,7 @@ public class ScaleFragment extends Fragment {
     TextView absContact;
     ImageView scaleHead;
     ScaleInfo scaleInfo;
+    TextView callList;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -45,18 +47,18 @@ public class ScaleFragment extends Fragment {
         outgoing = v.findViewById(R.id.outgoingNum);
         absContact = v.findViewById(R.id.showAbsContact);
         scaleHead = v.findViewById(R.id.scaleHead);
-
+        callList = v.findViewById(R.id.callLogs);
 
         calling.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Integer numI = scaleInfo.getIncomingNum("01056099441");
-                Integer numO = scaleInfo.getOutgoingNum("01056099441");
+                Integer numI = scaleInfo.getIncomingNum(v.getContext(), "01065515413");
+                Integer numO = scaleInfo.getOutgoingNum(v.getContext(), "01065515413");
                 incoming.setText("수신: " + numI.toString());
                 outgoing.setText("발신: " + numO.toString());
-                absContact.setText("연락 횟수 차: "+scaleInfo.betContact("01056099441"));
-                rotateScale("01056099441");
-
+                absContact.setText("연락 횟수 차: "+scaleInfo.betContact(v.getContext(), "01065515413"));
+                rotateScale(v.getContext(), "01065515413");
+                callList.setText(scaleInfo.getCallHistory(v.getContext(), "01065515413"));
             }
         });
 
@@ -64,8 +66,8 @@ public class ScaleFragment extends Fragment {
     }
 
     //저울 회전
-    public void rotateScale(String mobile) {
-        int bet = scaleInfo.betContact(mobile);
+    public void rotateScale(Context context, String mobile) {
+        int bet = scaleInfo.betContact(context, mobile);
         if (bet<10 || bet>-10) {
             int angle = 4*bet;
             scaleHead.setRotation(angle);

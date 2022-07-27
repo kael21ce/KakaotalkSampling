@@ -3,6 +3,7 @@ package org.techtown.kakaotalksampling;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.media.Image;
 import android.net.Uri;
@@ -17,17 +18,24 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ScaleInfo extends ContentProvider {
-    //연락 저울을 위한 메소드를 포함하고 있는 클래스
-    //연락처 목록
-    String[] callSet = new String[] { CallLog.Calls.DATE, CallLog.Calls.TYPE, CallLog.Calls.NUMBER,
-            CallLog.Calls.DURATION };
-    Cursor cursor = getContext().getContentResolver().query(CallLog.Calls.CONTENT_URI,
-            callSet, null, null, null);
 
     SimpleDateFormat simpleDateFormat;
+    String[] callSet;
+    long now = System.currentTimeMillis();
+    long weekago = now - 604800000; //데이터 수집 주기: 일주일
+
+    //연락 저울을 위한 메소드를 포함하고 있는 클래스
+    @Override
+    public boolean onCreate() {
+        return true;
+    }
 
     //입력된 연락처의 정보 가져오기
-    public String getCallHistory(String mobile) {
+    public String getCallHistory(Context context, String mobile) {
+        callSet = new String[] { CallLog.Calls.DATE, CallLog.Calls.TYPE, CallLog.Calls.NUMBER,
+                CallLog.Calls.DURATION };
+        Cursor cursor = context.getContentResolver().query(CallLog.Calls.CONTENT_URI,
+                callSet, null, null, null);
         if ( cursor == null)
         {
             return "통화기록 없음";
@@ -43,34 +51,37 @@ public class ScaleInfo extends ContentProvider {
             String lMobile = cursor.getString(2);
 
             if (lMobile.equals(mobile)) {
+                if (cursor.getLong(0)>weekago) {
+                    long callDate = cursor.getLong(0);
+                    simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd : E요일 : HH:mm:ss");
+                    String date_str = simpleDateFormat.format(new Date(callDate));
 
-                long callDate = cursor.getLong(0);
-                simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd : E요일 : HH:mm:ss");
-                String date_str = simpleDateFormat.format(new Date(callDate));
+                    callBuff.append(date_str + " : ");
 
-                callBuff.append(date_str + " : ");
+                    if (cursor.getInt(1) == CallLog.Calls.INCOMING_TYPE)
+                    {
+                        callBuff.append("수신 : ");
+                    }
+                    else if (cursor.getInt(1) == CallLog.Calls.OUTGOING_TYPE)
+                    {
+                        callBuff.append("발신 : ");
+                    }
+                    else if (cursor.getInt(1) == CallLog.Calls.MISSED_TYPE)
+                    {
+                        callBuff.append("부재중 : ");
+                    }
+                    else if (cursor.getInt(1) == CallLog.Calls.REJECTED_TYPE)
+                    {
+                        callBuff.append("종료 : ");
+                    }
+                    callBuff.append(cursor.getString(2)+ " : ");
+                    callBuff.append(cursor.getString(3));
+                    callBuff.append("\n");
 
-                if (cursor.getInt(1) == CallLog.Calls.INCOMING_TYPE)
-                {
-                    callBuff.append("수신 : ");
+                    cursor.moveToNext();
+                } else {
+                    cursor.moveToNext();
                 }
-                else if (cursor.getInt(1) == CallLog.Calls.OUTGOING_TYPE)
-                {
-                    callBuff.append("발신 : ");
-                }
-                else if (cursor.getInt(1) == CallLog.Calls.MISSED_TYPE)
-                {
-                    callBuff.append("부재중 : ");
-                }
-                else if (cursor.getInt(1) == CallLog.Calls.REJECTED_TYPE)
-                {
-                    callBuff.append("종료 : ");
-                }
-                callBuff.append(cursor.getString(2)+ " : ");
-                callBuff.append(cursor.getString(3));
-                callBuff.append("\n");
-
-                cursor.moveToNext();
             } else {
                 cursor.moveToNext();
             }
@@ -81,11 +92,12 @@ public class ScaleInfo extends ContentProvider {
     }
 
     //입력된 연락처로부터 수신된 횟수 가져오기
-    public int getIncomingNum(String mobile) {
+    public int getIncomingNum(Context context, String mobile) {
+        callSet = new String[] { CallLog.Calls.DATE, CallLog.Calls.TYPE, CallLog.Calls.NUMBER,
+                CallLog.Calls.DURATION };
+        Cursor cursor = context.getContentResolver().query(CallLog.Calls.CONTENT_URI,
+                callSet, null, null, null);
         Integer numIncoming = 0;
-
-        long now = System.currentTimeMillis();
-        long weekago = now - 604800000; //데이터 수집 주기: 일주일
 
         if ( cursor == null)
         {
@@ -115,7 +127,11 @@ public class ScaleInfo extends ContentProvider {
                     } else {
                         cursor.moveToNext();
                     }
+                } else {
+                    cursor.moveToNext();
                 }
+            } else {
+                cursor.moveToNext();
             }
 
         }
@@ -125,11 +141,12 @@ public class ScaleInfo extends ContentProvider {
 
 
     //입력된 연락처에게 발신한 횟수 가져오기
-    public int getOutgoingNum(String mobile) {
+    public int getOutgoingNum(Context context, String mobile) {
+        callSet = new String[] { CallLog.Calls.DATE, CallLog.Calls.TYPE, CallLog.Calls.NUMBER,
+                CallLog.Calls.DURATION };
+        Cursor cursor = context.getContentResolver().query(CallLog.Calls.CONTENT_URI,
+                callSet, null, null, null);
         Integer numOutgoing = 0;
-
-        long now = System.currentTimeMillis();
-        long weekago = now - 604800000; //데이터 수집 주기: 일주일
 
         if ( cursor == null)
         {
@@ -159,7 +176,11 @@ public class ScaleInfo extends ContentProvider {
                     } else {
                         cursor.moveToNext();
                     }
+                } else {
+                    cursor.moveToNext();
                 }
+            } else {
+                cursor.moveToNext();
             }
 
         }
@@ -168,9 +189,9 @@ public class ScaleInfo extends ContentProvider {
     }
 
     //입력된 연락처와의 연락 수 차이 가져오기
-    public int betContact(String mobile) {
-        int numI = getIncomingNum(mobile);
-        int numO = getOutgoingNum(mobile);
+    public int betContact(Context context, String mobile) {
+        int numI = getIncomingNum(context, mobile);
+        int numO = getOutgoingNum(context, mobile);
 
         return numI-numO;
     }
@@ -206,8 +227,4 @@ public class ScaleInfo extends ContentProvider {
         return 0;
     }
 
-    @Override
-    public boolean onCreate() {
-        return false;
-    }
 }
