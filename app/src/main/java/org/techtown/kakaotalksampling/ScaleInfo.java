@@ -1,15 +1,12 @@
 package org.techtown.kakaotalksampling;
 
 import android.content.ContentProvider;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.media.Image;
 import android.net.Uri;
 import android.provider.CallLog;
-import android.view.View;
-import android.widget.ImageView;
+import android.telecom.Call;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -115,7 +112,7 @@ public class ScaleInfo extends ContentProvider {
                 if (cursor.getLong(0)>=weekago) {
                     if (Integer.parseInt(cursor.getString(3))>=20) {
                         //통화 시간이 20초 이상인 연락만 인정
-                        if (cursor.getInt(1) == CallLog.Calls.INCOMING_TYPE)
+                        if (cursor.getInt(1) == CallLog.Calls.INCOMING_TYPE || cursor.getInt(1)==CallLog.Calls.FEATURES_VIDEO)
                         {
                             numIncoming = numIncoming + 1;
                         }
@@ -164,7 +161,7 @@ public class ScaleInfo extends ContentProvider {
                 if (cursor.getLong(0)>=weekago) {
                     if (Integer.parseInt(cursor.getString(3))>=20) {
                         //통화 시간이 20초 이상인 연락만 인정
-                        if (cursor.getInt(1) == CallLog.Calls.OUTGOING_TYPE)
+                        if (cursor.getInt(1) == CallLog.Calls.OUTGOING_TYPE || cursor.getInt(1)==CallLog.Calls.FEATURES_VIDEO)
                         {
                             numOutgoing = numOutgoing + 1;
                         }
