@@ -23,9 +23,6 @@ public class ScaleInfo extends ContentProvider {
             CallLog.Calls.DURATION };
     Cursor cursor = getContext().getContentResolver().query(CallLog.Calls.CONTENT_URI,
             callSet, null, null, null);
-    //연락 횟수를 세기 위한 정수
-    Integer numIncoming = 0;
-    Integer numOutgoing = 0;
 
     SimpleDateFormat simpleDateFormat;
 
@@ -85,6 +82,8 @@ public class ScaleInfo extends ContentProvider {
 
     //입력된 연락처로부터 수신된 횟수 가져오기
     public int getIncomingNum(String mobile) {
+        Integer numIncoming = 0;
+
         long now = System.currentTimeMillis();
         long weekago = now - 604800000; //데이터 수집 주기: 일주일
 
@@ -127,6 +126,8 @@ public class ScaleInfo extends ContentProvider {
 
     //입력된 연락처에게 발신한 횟수 가져오기
     public int getOutgoingNum(String mobile) {
+        Integer numOutgoing = 0;
+
         long now = System.currentTimeMillis();
         long weekago = now - 604800000; //데이터 수집 주기: 일주일
 
@@ -168,9 +169,6 @@ public class ScaleInfo extends ContentProvider {
 
     //입력된 연락처와의 연락 수 차이 가져오기
     public int betContact(String mobile) {
-        numOutgoing = 0;
-        numIncoming = 0;
-
         int numI = getIncomingNum(mobile);
         int numO = getOutgoingNum(mobile);
 

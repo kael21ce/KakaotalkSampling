@@ -33,16 +33,12 @@ public class ScaleFragment extends Fragment {
     ImageView scaleHead;
     ScaleInfo scaleInfo;
 
-    SimpleDateFormat simpleDateFormat;
-
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_scale, container, false);
 
         scaleInfo = new ScaleInfo();
-        final int[] numI = new int[1];
-        final int[] numO = new int[1];
 
         calling = v.findViewById(R.id.callCall);
         incoming = v.findViewById(R.id.incomingNum);
@@ -54,8 +50,8 @@ public class ScaleFragment extends Fragment {
         calling.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                numI[0] = scaleInfo.getIncomingNum("01056099441");
-                numO[0] = scaleInfo.getOutgoingNum("01056099441");
+                Integer numI = scaleInfo.getIncomingNum("01056099441");
+                Integer numO = scaleInfo.getOutgoingNum("01056099441");
                 incoming.setText("수신: " + numI.toString());
                 outgoing.setText("발신: " + numO.toString());
                 absContact.setText("연락 횟수 차: "+scaleInfo.betContact("01056099441"));
