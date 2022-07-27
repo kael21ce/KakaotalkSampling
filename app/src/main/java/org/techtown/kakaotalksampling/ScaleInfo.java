@@ -112,7 +112,7 @@ public class ScaleInfo extends ContentProvider {
                 if (cursor.getLong(0)>=weekago) {
                     if (Integer.parseInt(cursor.getString(3))>=20) {
                         //통화 시간이 20초 이상인 연락만 인정
-                        if (cursor.getInt(1) == CallLog.Calls.INCOMING_TYPE || cursor.getInt(1)==CallLog.Calls.FEATURES_VIDEO)
+                        if (cursor.getInt(1) == CallLog.Calls.INCOMING_TYPE)
                         {
                             numIncoming = numIncoming + 1;
                         }
@@ -161,7 +161,7 @@ public class ScaleInfo extends ContentProvider {
                 if (cursor.getLong(0)>=weekago) {
                     if (Integer.parseInt(cursor.getString(3))>=20) {
                         //통화 시간이 20초 이상인 연락만 인정
-                        if (cursor.getInt(1) == CallLog.Calls.OUTGOING_TYPE || cursor.getInt(1)==CallLog.Calls.FEATURES_VIDEO)
+                        if (cursor.getInt(1) == CallLog.Calls.OUTGOING_TYPE)
                         {
                             numOutgoing = numOutgoing + 1;
                         }
