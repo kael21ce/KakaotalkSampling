@@ -3,8 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="org.techtown.kakaotalksampling">
 
-    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- Grants the READ_PHONE_STATE permission only on devices that run
+         Android 10 (API level 29) and lower. -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"
+        android:maxSdkVersion="29" />
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS"/>
 
     <application
         android:allowBackup="true"
@@ -16,10 +21,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KakaotalkSampling"
         tools:targetApi="31">
+        <receiver
+            android:name=".CallReceiver"
+            android:enabled="true"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE"/>
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name=".ChatActivity"
             android:exported="true"
-            android:label="채팅"/>
+            android:label="채팅" />
         <activity
             android:name=".FriendprofileActivity"
             android:exported="true"
@@ -30,8 +45,7 @@
             android:label="나의 프로필" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
