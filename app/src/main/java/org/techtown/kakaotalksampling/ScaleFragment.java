@@ -1,6 +1,7 @@
 package org.techtown.kakaotalksampling;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,10 @@ public class ScaleFragment extends Fragment {
         scaleHead = v.findViewById(R.id.scaleHead);
         infoList = v.findViewById(R.id.infoList);
 
+        //서비스로부터 전달된 인텐트 처리
+        Intent passedIntent = getActivity().getIntent();
+        processIntentWithScale(v.getContext(), passedIntent);
+
         activate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,6 +66,19 @@ public class ScaleFragment extends Fragment {
             scaleHead.setRotation(angle);
         } else {
             scaleHead.setRotation(45);
+        }
+    }
+
+    //수신된 인텐트 처리
+    private void processIntentWithScale(Context context, Intent intent) {
+        if (intent != null) {
+            String newNumber = intent.getStringExtra("newNumber");
+            Integer numI = scaleInfo.getIncomingNum(context, newNumber);
+            Integer numO = scaleInfo.getOutgoingNum(context, newNumber);
+            incoming.setText("수신: " + numI.toString());
+            outgoing.setText("발신: " + numO.toString());
+            absContact.setText("연락 횟수 차: "+scaleInfo.betContact(context, newNumber));
+            rotateScale(context, newNumber);
         }
     }
 
