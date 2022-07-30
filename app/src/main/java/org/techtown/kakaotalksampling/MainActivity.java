@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
@@ -61,25 +62,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        AndPermission.with(this)
-                .runtime()
-                .permission(Permission.READ_CALL_LOG, Permission.READ_CONTACTS,
-                        Permission.READ_PHONE_NUMBERS, Permission.READ_PHONE_STATE)
-                .onGranted(new Action<List<String>>() {
-                    @Override
-                    public void onAction(List<String> permissions) {
-                        Toast.makeText(MainActivity.this, "허용된 권한 개수"+permissions.size(),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .onDenied(new Action<List<String>>() {
-                    @Override
-                    public void onAction(List<String> permissions) {
-                        Toast.makeText(MainActivity.this, "거부된 권한 개수"+permissions.size(),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .start();
+        checkPermission();
 
         abar = getSupportActionBar();
 
@@ -127,6 +110,50 @@ public class MainActivity extends AppCompatActivity {
 
                 }
         );
+    }
+
+    private void checkPermission() {
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q) {
+            AndPermission.with(this)
+                    .runtime()
+                    .permission(Permission.READ_CALL_LOG, Permission.READ_CONTACTS,
+                            Permission.READ_PHONE_NUMBERS)
+                    .onGranted(new Action<List<String>>() {
+                        @Override
+                        public void onAction(List<String> permissions) {
+                            Toast.makeText(MainActivity.this, "허용된 권한 개수"+permissions.size(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .onDenied(new Action<List<String>>() {
+                        @Override
+                        public void onAction(List<String> permissions) {
+                            Toast.makeText(MainActivity.this, "거부된 권한 개수"+permissions.size(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .start();
+        } else {
+            AndPermission.with(this)
+                    .runtime()
+                    .permission(Permission.READ_CALL_LOG, Permission.READ_CONTACTS,
+                            Permission.READ_PHONE_STATE)
+                    .onGranted(new Action<List<String>>() {
+                        @Override
+                        public void onAction(List<String> permissions) {
+                            Toast.makeText(MainActivity.this, "허용된 권한 개수"+permissions.size(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .onDenied(new Action<List<String>>() {
+                        @Override
+                        public void onAction(List<String> permissions) {
+                            Toast.makeText(MainActivity.this, "거부된 권한 개수"+permissions.size(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .start();
+        }
     }
 
 }
