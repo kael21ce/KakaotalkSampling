@@ -24,6 +24,12 @@ public class CallService extends Service {
             //전화번호 가져오기
             String number = intent.getStringExtra("number");
             Log.i(STAG, "Given Number: " + number);
+            //전송할 인텐트 생성
+            Intent showIntent = new Intent(getApplicationContext(), ScaleFragment.class);
+            showIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP|
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            showIntent.putExtra("newNumber", number);
+            startActivity(showIntent);
         }
 
         return super.onStartCommand(intent, flags, startId);
