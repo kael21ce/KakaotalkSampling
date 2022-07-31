@@ -11,6 +11,7 @@ import android.util.Log;
 
 public class SMSReceiver extends BroadcastReceiver {
     public static final String TAG = "SMSReceiver";
+    public static final String STAG = "SMSService";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -22,6 +23,12 @@ public class SMSReceiver extends BroadcastReceiver {
         if (messages != null && messages.length > 0) {
             String sender = messages[0].getOriginatingAddress();
             Log.i(TAG, "SMS sender: " + sender);
+
+            //서비스로 인텐트 전송
+            Intent serviceIntent = new Intent(context, SMSService.class);
+            serviceIntent.putExtra("mobile", sender);
+            context.startService(serviceIntent);
+            Log.i(STAG, "서비스 시작");
         }
     }
 
