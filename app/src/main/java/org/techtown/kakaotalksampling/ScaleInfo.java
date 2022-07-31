@@ -190,8 +190,8 @@ public class ScaleInfo extends ContentProvider {
         return numOutgoing;
     }
 
-    //입력된 연락처와의 연락 수 차이 가져오기
-    public int betContact(Context context, String mobile) {
+    //입력된 연락처와의 통화 수 차이 가져오기
+    public int betCall(Context context, String mobile) {
         int numI = getIncomingNum(context, mobile);
         int numO = getOutgoingNum(context, mobile);
 
@@ -231,43 +231,109 @@ public class ScaleInfo extends ContentProvider {
 
     //입력된 연락처로부터 sms 내역 가져오기
     public String getSMSHistory(Context context, String mobile) {
-        int threadN;
+        int idThread = getSMSThread(context, mobile);
         smsSet = new String[] { "date", "type", "address", "thread_id" };
-        Cursor cursor = context.getContentResolver().query(smsUri,
-                smsSet, null, null, "date ASC");
-        if ( cursor == null)
+        Cursor newC = context.getContentResolver().query(smsUri,
+                smsSet, Telephony.Sms.THREAD_ID+" = "+idThread, null, "date ASC");
+        if ( newC == null)
         {
             return "sms 내역 없음.";
         }
 
-        int recordCount = cursor.getCount();
+        int recordCount = newC.getCount();
         StringBuffer smsBuff = new StringBuffer();
         smsBuff.append("\n날짜 : 요일 : 시간 : 구분 : 전화번호 : 스레드 id\n\n");
-        cursor.moveToFirst();
+        newC.moveToFirst();
 
         for (int i =0; i< recordCount; i++) {
-            String lMobile = cursor.getString(2);
-            //전화번호 필터
-            if (lMobile == null) {
-                cursor.moveToNext();
-            } else if (lMobile.equals(mobile)) {
+            long smsDate = newC.getLong(0);
+            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd : E요일 : HH:mm:ss");
+            String date_str = simpleDateFormat.format(new Date(smsDate));
 
-                long smsDate = cursor.getLong(0);
-                simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd : E요일 : HH:mm:ss");
-                String date_str = simpleDateFormat.format(new Date(smsDate));
-
-                smsBuff.append(date_str+" : ");
-                smsBuff.append(cursor.getInt(1) + " : ");
-                smsBuff.append(cursor.getString(2) + " : ");
-                smsBuff.append(cursor.getInt(3) + "\n");
-
-                cursor.moveToNext();
+            smsBuff.append(date_str+" : ");
+            if (newC.getInt(1)==1) {
+                smsBuff.append("수신 : ");
             } else {
-                cursor.moveToNext();
+                smsBuff.append("발신 : ");
             }
+            smsBuff.append(newC.getString(2) + " : ");
+            smsBuff.append(newC.getInt(3) + "\n");
+
+            newC.moveToNext();
+        }
+        newC.close();
+        return smsBuff.toString();
+    }
+
+    //입력된 연락처로부터 수신한 sms 개수 가져오기
+    public int getInboxNum(Context context, String mobile) {
+        int inboxNum = 0;
+        int threadId = getSMSThread(context, mobile);
+        smsSet = new String[] { "date", "type", "address", "thread_id" };
+        Cursor cursor = context.getContentResolver().query(smsUri,
+                smsSet, Telephony.Sms.THREAD_ID+" = "+threadId, null, "date ASC");
+        if ( cursor == null)
+        {
+            return 0;
+        }
+        int recordCount = cursor.getCount();
+        cursor.moveToFirst();
+        for (int i =0; i< recordCount; i++) {
+            if (cursor.getLong(0)>weekago) {
+                if (cursor.getInt(1)==1) {
+                    inboxNum = inboxNum + 1;
+                } else {
+                    inboxNum = inboxNum;
+                }
+            }
+            cursor.moveToNext();
         }
         cursor.close();
-        return smsBuff.toString();
+        return inboxNum;
+    }
+
+    //입력된 연락처에게 발신한 sms 개수 가져오기
+    public int getSentNum(Context context, String mobile) {
+        int sentNum = 0;
+        int threadId = getSMSThread(context, mobile);
+        smsSet = new String[] { "date", "type", "address", "thread_id" };
+        Cursor cursor = context.getContentResolver().query(smsUri,
+                smsSet, Telephony.Sms.THREAD_ID+" = "+threadId, null, "date ASC");
+        if ( cursor == null)
+        {
+            return 0;
+        }
+        int recordCount = cursor.getCount();
+        cursor.moveToFirst();
+        for (int i =0; i< recordCount; i++) {
+            if (cursor.getLong(0)>weekago) {
+                if (cursor.getInt(1)==2) {
+                    sentNum = sentNum + 1;
+                } else {
+                    sentNum = sentNum;
+                }
+            }
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return sentNum;
+    }
+
+    //입력된 연락처와의 연락 수 차이 가져오기
+    public int betSMS(Context context, String mobile) {
+        int numI = getInboxNum(context, mobile);
+        int numO = getSentNum(context, mobile);
+
+        return numI-numO;
+    }
+
+    //입력된 연락처와의 연락 수 차이 가져오기
+    public float betContact(Context context, String mobile) {
+        int numCall = betCall(context, mobile);
+        int numSMS = betSMS(context, mobile);
+        float y = 0.5f*numCall+0.5f*numSMS;
+
+        return y;
     }
 
 
