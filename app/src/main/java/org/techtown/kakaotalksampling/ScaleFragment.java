@@ -22,6 +22,9 @@ public class ScaleFragment extends Fragment {
     ImageView scaleHead;
     ScaleInfo scaleInfo;
     TextView infoList;
+    //전화번호 설정
+    String mobile = "01071816705";
+    //
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -35,11 +38,12 @@ public class ScaleFragment extends Fragment {
         outgoing = v.findViewById(R.id.outgoingNum);
         absContact = v.findViewById(R.id.showAbsContact);
         scaleHead = v.findViewById(R.id.scaleHead);
-        infoList = v.findViewById(R.id.infoList);
+        //infoList = v.findViewById(R.id.infoList);
 
         //서비스로부터 전달된 인텐트 처리
         Intent passedIntent = getActivity().getIntent();
         processIntentWithScale(v.getContext(), passedIntent);
+        //
 
         activate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,11 +56,7 @@ public class ScaleFragment extends Fragment {
                 outgoing.setText("발신: 통화-" + numO.toString()+" / SMS-"+numS.toString());
                 absContact.setText("연락 횟수 차: "+scaleInfo.betContact(v.getContext(), "01071816705"));
                 rotateScale(v.getContext(), "01071816705");
-                //infoList.setText(scaleInfo.getCallHistory(v.getContext(), "01065515413"));
-                //01065515413 01071816705 01099398250
-                //Integer numT = scaleInfo.getSMSThread(v.getContext(), "01099398250");
-                //infoList.setText(numT.toString());
-                //infoList.setText(scaleInfo.getSMSHistory(v.getContext(), "01071816705"));
+
             }
         });
 
@@ -78,12 +78,16 @@ public class ScaleFragment extends Fragment {
     private void processIntentWithScale(Context context, Intent intent) {
         if (intent != null) {
             String newNumber = intent.getStringExtra("newNumber");
-            Integer numI = scaleInfo.getIncomingNum(context, newNumber);
-            Integer numO = scaleInfo.getOutgoingNum(context, newNumber);
-            incoming.setText("수신: " + numI.toString());
-            outgoing.setText("발신: " + numO.toString());
-            absContact.setText("연락 횟수 차: "+scaleInfo.betContact(context, newNumber));
-            rotateScale(context, newNumber);
+            if (newNumber.equals(mobile)) {
+                Integer numI = scaleInfo.getIncomingNum(context, newNumber);
+                Integer numO = scaleInfo.getOutgoingNum(context, newNumber);
+                Integer snumI = scaleInfo.getInboxNum(context, newNumber);
+                Integer numS = scaleInfo.getSentNum(context, newNumber);
+                incoming.setText("수신: 통화-" + numI.toString()+" / SMS-"+snumI.toString());
+                outgoing.setText("발신: 통화-" + numO.toString()+" / SMS-"+numS.toString());
+                absContact.setText("연락 횟수 차: "+scaleInfo.betContact(context, newNumber));
+                rotateScale(context, newNumber);
+            }
         }
     }
 
