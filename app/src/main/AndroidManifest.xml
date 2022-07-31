@@ -40,6 +40,11 @@
             android:enabled="true"
             android:exported="true" />
 
+        <service
+            android:name=".SMSService"
+            android:enabled="true"
+            android:exported="true" />
+
         <receiver
             android:name=".CallReceiver"
             android:enabled="true"
