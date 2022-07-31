@@ -52,7 +52,8 @@ public class ScaleFragment extends Fragment {
                 rotateScale(v.getContext(), "01065515413");
                 //infoList.setText(scaleInfo.getCallHistory(v.getContext(), "01065515413"));
                 //01065515413 01071816705 01099398250
-                infoList.setText(scaleInfo.getSMSHistory(v.getContext(), "01099398250"));
+                Integer numT = scaleInfo.getSMSThread(v.getContext(), "01099398250");
+                infoList.setText(numT.toString());
             }
         });
 

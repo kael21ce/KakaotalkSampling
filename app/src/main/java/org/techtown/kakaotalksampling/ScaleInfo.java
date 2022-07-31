@@ -198,36 +198,73 @@ public class ScaleInfo extends ContentProvider {
         return numI-numO;
     }
 
+    //입력된 연락처로부터 sms thread_id 가져오기
+    public int getSMSThread(Context context, String mobile) {
+        int threadN=-1;
+        smsSet = new String[] { "address", "thread_id" };
+        Cursor cursor = context.getContentResolver().query(smsUri,
+                smsSet, null, null, "date ASC");
+        if ( cursor == null)
+        {
+            return threadN;
+        }
+
+        int recordCount = cursor.getCount();
+        cursor.moveToFirst();
+
+        for (int i =0; i< recordCount; i++) {
+            String lMobile = cursor.getString(0);
+            //전화번호 필터
+            if (lMobile == null) {
+                cursor.moveToNext();
+            } else if (lMobile.equals(mobile)) {
+                threadN = cursor.getInt(1);
+
+                break;
+            } else {
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return threadN;
+    }
+
     //입력된 연락처로부터 sms 내역 가져오기
     public String getSMSHistory(Context context, String mobile) {
-        //smsSet = new String[] { Telephony.Sms.Conversations.DATE, Telephony.Sms.Conversations.TYPE,
-                //Telephony.Sms.Conversations.ADDRESS, Telephony.Sms.Conversations.THREAD_ID };
+        int threadN;
         smsSet = new String[] { "date", "type", "address", "thread_id" };
         Cursor cursor = context.getContentResolver().query(smsUri,
                 smsSet, null, null, "date ASC");
         if ( cursor == null)
         {
-            return "sms 기록 없음";
+            return "sms 내역 없음.";
         }
 
         int recordCount = cursor.getCount();
         StringBuffer smsBuff = new StringBuffer();
-        //smsBuff.append("\n날짜 : 요일 : 시간 : 구분 : 전화번호 : 스레드 id\n\n");
+        smsBuff.append("\n날짜 : 요일 : 시간 : 구분 : 전화번호 : 스레드 id\n\n");
         cursor.moveToFirst();
 
         for (int i =0; i< recordCount; i++) {
+            String lMobile = cursor.getString(2);
+            //전화번호 필터
+            if (lMobile == null) {
+                cursor.moveToNext();
+            } else if (lMobile.equals(mobile)) {
 
-            long smsDate = cursor.getLong(0);
-            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd : E요일 : HH:mm:ss");
-            String date_str = simpleDateFormat.format(new Date(smsDate));
+                long smsDate = cursor.getLong(0);
+                simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd : E요일 : HH:mm:ss");
+                String date_str = simpleDateFormat.format(new Date(smsDate));
 
-            smsBuff.append(date_str+" : ");
-            smsBuff.append(cursor.getInt(1) + " : ");
-            smsBuff.append(cursor.getString(2) + " : ");
-            smsBuff.append(cursor.getInt(3) + "\n");
+                smsBuff.append(date_str+" : ");
+                smsBuff.append(cursor.getInt(1) + " : ");
+                smsBuff.append(cursor.getString(2) + " : ");
+                smsBuff.append(cursor.getInt(3) + "\n");
 
-            cursor.moveToNext();
-
+                cursor.moveToNext();
+            } else {
+                cursor.moveToNext();
+            }
         }
         cursor.close();
         return smsBuff.toString();
