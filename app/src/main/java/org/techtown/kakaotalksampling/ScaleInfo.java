@@ -23,7 +23,8 @@ public class ScaleInfo extends ContentProvider {
     long now = System.currentTimeMillis();
     long weekago = now - 604800000; //데이터 수집 주기: 일주일
 
-    Uri smsUri = Telephony.Sms.Conversations.CONTENT_URI;
+    Uri smsUri = Uri.parse("content://mms-sms/conversations");
+
 
     //연락 저울을 위한 메소드를 포함하고 있는 클래스
     @Override
@@ -199,10 +200,11 @@ public class ScaleInfo extends ContentProvider {
 
     //입력된 연락처로부터 sms 내역 가져오기
     public String getSMSHistory(Context context, String mobile) {
-        smsSet = new String[] { Telephony.Sms.Conversations.DATE, Telephony.Sms.Conversations.TYPE,
-                Telephony.Sms.Conversations.ADDRESS, Telephony.Sms.Conversations.THREAD_ID };
+        //smsSet = new String[] { Telephony.Sms.Conversations.DATE, Telephony.Sms.Conversations.TYPE,
+                //Telephony.Sms.Conversations.ADDRESS, Telephony.Sms.Conversations.THREAD_ID };
+        smsSet = new String[] { "date", "type", "address", "thread_id" };
         Cursor cursor = context.getContentResolver().query(smsUri,
-                smsSet, null, null, null);
+                smsSet, null, null, "date ASC");
         if ( cursor == null)
         {
             return "sms 기록 없음";
@@ -210,40 +212,21 @@ public class ScaleInfo extends ContentProvider {
 
         int recordCount = cursor.getCount();
         StringBuffer smsBuff = new StringBuffer();
-        smsBuff.append("\n날짜 : 요일 : 시간 : 구분 : 전화번호 : 스레드 id\n\n");
+        //smsBuff.append("\n날짜 : 요일 : 시간 : 구분 : 전화번호 : 스레드 id\n\n");
         cursor.moveToFirst();
 
         for (int i =0; i< recordCount; i++) {
 
-            String lMobile = cursor.getString(2);
+            long smsDate = cursor.getLong(0);
+            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd : E요일 : HH:mm:ss");
+            String date_str = simpleDateFormat.format(new Date(smsDate));
 
-            if (lMobile.equals(mobile)) {
-                if (cursor.getLong(0)>weekago) {
-                    long smsDate = cursor.getLong(0);
-                    simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd : E요일 : HH:mm:ss");
-                    String date_str = simpleDateFormat.format(new Date(smsDate));
+            smsBuff.append(date_str+" : ");
+            smsBuff.append(cursor.getInt(1) + " : ");
+            smsBuff.append(cursor.getString(2) + " : ");
+            smsBuff.append(cursor.getInt(3) + "\n");
 
-                    smsBuff.append(date_str + " : ");
-
-                    if (cursor.getInt(1) == Telephony.Sms.Conversations.MESSAGE_TYPE_INBOX)
-                    {
-                        smsBuff.append("수신 : ");
-                    }
-                    else if (cursor.getInt(1) == Telephony.Sms.Conversations.MESSAGE_TYPE_SENT)
-                    {
-                        smsBuff.append("발신 : ");
-                    }
-                    smsBuff.append(cursor.getString(2)+ " : ");
-                    smsBuff.append(cursor.getString(3));
-                    smsBuff.append("\n");
-
-                    cursor.moveToNext();
-                } else {
-                    cursor.moveToNext();
-                }
-            } else {
-                cursor.moveToNext();
-            }
+            cursor.moveToNext();
 
         }
         cursor.close();

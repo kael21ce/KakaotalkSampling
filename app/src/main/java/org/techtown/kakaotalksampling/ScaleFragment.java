@@ -50,8 +50,9 @@ public class ScaleFragment extends Fragment {
                 outgoing.setText("발신: " + numO.toString());
                 absContact.setText("연락 횟수 차: "+scaleInfo.betContact(v.getContext(), "01065515413"));
                 rotateScale(v.getContext(), "01065515413");
-                infoList.setText(scaleInfo.getCallHistory(v.getContext(), "01065515413"));
-                //01065515413 01071816705
+                //infoList.setText(scaleInfo.getCallHistory(v.getContext(), "01065515413"));
+                //01065515413 01071816705 01099398250
+                infoList.setText(scaleInfo.getSMSHistory(v.getContext(), "01099398250"));
             }
         });
 
