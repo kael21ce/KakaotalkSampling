@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             AndPermission.with(this)
                     .runtime()
                     .permission(Permission.READ_CALL_LOG, Permission.READ_CONTACTS,
-                            Permission.READ_PHONE_NUMBERS)
+                            Permission.READ_PHONE_NUMBERS, Permission.READ_SMS)
                     .onGranted(new Action<List<String>>() {
                         @Override
                         public void onAction(List<String> permissions) {
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
             AndPermission.with(this)
                     .runtime()
                     .permission(Permission.READ_CALL_LOG, Permission.READ_CONTACTS,
-                            Permission.READ_PHONE_STATE)
+                            Permission.READ_PHONE_STATE, Permission.READ_SMS)
                     .onGranted(new Action<List<String>>() {
                         @Override
                         public void onAction(List<String> permissions) {
