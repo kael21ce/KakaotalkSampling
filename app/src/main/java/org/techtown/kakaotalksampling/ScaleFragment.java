@@ -42,7 +42,9 @@ public class ScaleFragment extends Fragment {
 
         //서비스로부터 전달된 인텐트 처리
         Intent passedIntent = getActivity().getIntent();
-        processIntentWithScale(v.getContext(), passedIntent);
+        if (passedIntent!=null) {
+            processIntentWithScale(v.getContext(), passedIntent);
+        }
         //
 
         activate.setOnClickListener(new View.OnClickListener() {
@@ -78,15 +80,17 @@ public class ScaleFragment extends Fragment {
     private void processIntentWithScale(Context context, Intent intent) {
         if (intent != null) {
             String newNumber = intent.getStringExtra("newNumber");
-            if (newNumber.equals(mobile)) {
-                Integer numI = scaleInfo.getIncomingNum(context, newNumber);
-                Integer numO = scaleInfo.getOutgoingNum(context, newNumber);
-                Integer snumI = scaleInfo.getInboxNum(context, newNumber);
-                Integer numS = scaleInfo.getSentNum(context, newNumber);
-                incoming.setText("수신: 통화-" + numI.toString()+" / SMS-"+snumI.toString());
-                outgoing.setText("발신: 통화-" + numO.toString()+" / SMS-"+numS.toString());
-                absContact.setText("연락 횟수 차: "+scaleInfo.betContact(context, newNumber));
-                rotateScale(context, newNumber);
+            if (newNumber!=null) {
+                if (newNumber.equals(mobile)) {
+                    Integer numI = scaleInfo.getIncomingNum(context, newNumber);
+                    Integer numO = scaleInfo.getOutgoingNum(context, newNumber);
+                    Integer snumI = scaleInfo.getInboxNum(context, newNumber);
+                    Integer numS = scaleInfo.getSentNum(context, newNumber);
+                    incoming.setText("수신: 통화-" + numI.toString()+" / SMS-"+snumI.toString());
+                    outgoing.setText("발신: 통화-" + numO.toString()+" / SMS-"+numS.toString());
+                    absContact.setText("연락 횟수 차: "+scaleInfo.betContact(context, newNumber));
+                    rotateScale(context, newNumber);
+                }
             }
         }
     }
