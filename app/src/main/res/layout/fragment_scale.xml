@@ -48,7 +48,6 @@
             android:id="@+id/scaleHead"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:background="#673AB7"
             android:backgroundTint="#00FFFFFF"
             android:backgroundTintMode="add"
             app:layout_constraintBottom_toBottomOf="parent"
