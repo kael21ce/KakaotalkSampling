@@ -3,7 +3,10 @@ package org.techtown.kakaotalksampling;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
@@ -62,7 +65,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //위험 권한 부여
         checkPermission();
+        //블루투스 관련 위험 권한 부여
+        int permissionCheck = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.BLUETOOTH_CONNECT);
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "블루투스 권한 있음.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "블루투스 권한 없음.", Toast.LENGTH_SHORT).show();
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.BLUETOOTH_CONNECT)) {
+                Toast.makeText(this, "블루투스 권한 설명 필요함.", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_CONNECT}, 101);
 
         abar = getSupportActionBar();
 
