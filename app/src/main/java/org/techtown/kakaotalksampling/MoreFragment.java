@@ -92,7 +92,8 @@ public class MoreFragment extends Fragment {
                             deviceLocalArrayList.clear();
                         }
                         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-                        registerReceiver(receiver, filter);
+                        getActivity().registerReceiver(receiver, filter);
+
                     } else {
                         Toast.makeText(v.getContext(), "블루투스가 켜지지 않았습니다.",
                                 Toast.LENGTH_SHORT).show();
@@ -185,10 +186,10 @@ public class MoreFragment extends Fragment {
 
     //receiver 등록 해제
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
 
-        unregisterReceiver(receiver);
+        getActivity().unregisterReceiver(receiver);
     }
 
     //createBluetoothSocket 메서드
@@ -201,7 +202,7 @@ public class MoreFragment extends Fragment {
 
             }
         }
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT)
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT)
                 != PackageManager.PERMISSION_GRANTED) {
             return null;
         }
