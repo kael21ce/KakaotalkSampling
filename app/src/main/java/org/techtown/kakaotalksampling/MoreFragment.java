@@ -120,6 +120,28 @@ public class MoreFragment extends Fragment {
                     btStatus.setText("상태: 기기 없음.");
                 }
 
+                //소캣 생성 및 연결
+                try {
+                    btSocket = createBluetoothSocket(device);
+                    if (btSocket != null) {
+                        btSocket.connect();
+                    }
+                } catch (IOException e) {
+                    flag = false;
+                    btStatus.setText("상태: 연결 실패");
+                    e.printStackTrace();
+                }
+
+                if (flag) {
+                    btStatus.setText("상태: 연결되었음.");
+                    connectedThread = new ConnectedThread(btSocket);
+                    connectedThread.start();
+                }
+
+                if (connectedThread != null) {
+                    connectedThread.write("1");
+                }
+
             }
         });
         return v;
@@ -157,4 +179,13 @@ public class MoreFragment extends Fragment {
         }
     };
 
+    //receiver 등록 해제
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        unregisterReceiver(receiver);
+    }
+
+    
 }
