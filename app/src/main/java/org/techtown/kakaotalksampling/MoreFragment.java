@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -89,7 +90,7 @@ public class MoreFragment extends Fragment {
                         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
                         registerReceiver(receiver, filter);
                     } else {
-                        Toast.makeText(getApplicationContext(), "블루투스가 켜지지 않았습니다.",
+                        Toast.makeText(v.getContext(), "블루투스가 켜지지 않았습니다.",
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -112,5 +113,23 @@ public class MoreFragment extends Fragment {
             startActivityForResult(enableIntent, REQUEST_ENABLED_BT);
         }
     }
+
+    //ACTION_FOUND를 위한 브로드캐스트 리시버
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                String deviceName = device.getName();
+                String deviceHardwareAddress = device.getAddress();
+                deviceLocalArrayList.add(deviceHardwareAddress);
+                deviceLocalNameL.add(deviceName);
+            }
+        }
+    };
 
 }
