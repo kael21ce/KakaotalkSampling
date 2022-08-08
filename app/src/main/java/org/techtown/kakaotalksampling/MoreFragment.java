@@ -51,7 +51,7 @@ public class MoreFragment extends Fragment {
         btLED = v.findViewById(R.id.btLED);
         btLED.setOnClickListener(v1 -> {
             checkBluetoothOn();
-            connectDevice("");
+            connectDevice("HC-06");
         });
 
         return v;
@@ -99,6 +99,10 @@ public class MoreFragment extends Fragment {
 
     public void connectDevice(final String deviceName) {
         mRemoteDevice = getDeviceFromBondedList(deviceName);
+        if (mRemoteDevice==null) {
+            btStatus.setText("상태: 연결 가능한 기기가 없습니다.");
+            return;
+        }
 
         @SuppressLint("SetTextI18n") Thread BTConnect = new Thread(() -> {
             try {
@@ -129,16 +133,20 @@ public class MoreFragment extends Fragment {
 
     public BluetoothDevice getDeviceFromBondedList(String name) {
         BluetoothDevice selectedDevice = null;
-        for (BluetoothDevice device : mDevices) {
-            if (ActivityCompat.checkSelfPermission(getView().getContext(), Manifest.permission.BLUETOOTH_CONNECT) !=
-                    PackageManager.PERMISSION_GRANTED) {
-                btStatus.setText("상태: Bluetooth 권한이 없습니다.");
-                return null;
+        try {
+            for (BluetoothDevice device : mDevices) {
+                if (ActivityCompat.checkSelfPermission(getView().getContext(), Manifest.permission.BLUETOOTH_CONNECT) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    btStatus.setText("상태: Bluetooth 권한이 없습니다.");
+                    break;
+                }
+                if (name.equals(device.getName())) {
+                    selectedDevice = device;
+                    break;
+                }
             }
-            if (name.equals(device.getName())) {
-                selectedDevice = device;
-                break;
-            }
+        }catch (Exception e) {
+            e.printStackTrace();
         }
         return selectedDevice;
     }
