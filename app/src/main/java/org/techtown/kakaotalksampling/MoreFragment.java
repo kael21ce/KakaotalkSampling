@@ -95,6 +95,31 @@ public class MoreFragment extends Fragment {
                     }
                 }
 
+                //블루투스 통신
+                //기기 주소 가져오기-기기명이 " faceArduino"인 기기의 주소를 가져온다.
+                String faceDeviceAddress = "";
+                int pairedLength = devicePairedArrayList.size();
+                for (int i = 0; i < pairedLength; i++) {
+                    if (devicePairedNameL.get(i).equals(" faceArduino")) {
+                        faceDeviceAddress = devicePairedArrayList.get(i);
+                        break;
+                    }
+                }
+                int localLength = deviceLocalArrayList.size();
+                for (int i = 0; i < localLength; i++) {
+                    if (deviceLocalNameL.get(i).equals(" faceArduino")) {
+                        faceDeviceAddress = deviceLocalArrayList.get(i);
+                        break;
+                    }
+                }
+                try {
+                    device = btAdapter.getRemoteDevice(faceDeviceAddress);
+                    flag = true;
+                } catch (Exception e) {
+                    flag = false;
+                    btStatus.setText("상태: 기기 없음.");
+                }
+
             }
         });
         return v;
