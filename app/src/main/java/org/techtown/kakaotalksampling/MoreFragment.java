@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -28,6 +29,7 @@ import androidx.fragment.app.Fragment;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
@@ -46,6 +48,8 @@ public class MoreFragment extends Fragment {
     BluetoothDevice device;
     ConnectedThread connectedThread;
     boolean flag;
+
+    private static final UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
 
 
@@ -187,5 +191,24 @@ public class MoreFragment extends Fragment {
         unregisterReceiver(receiver);
     }
 
-    
+    //createBluetoothSocket 메서드
+    private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
+        if (Build.VERSION.SDK_INT >= 10) {
+            try {
+                final Method m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", new Class[]{UUID.class});
+                return (BluetoothSocket) m.invoke(device, uuid);
+            } catch (Exception e) {
+
+            }
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT)
+                != PackageManager.PERMISSION_GRANTED) {
+            return null;
+        }
+        try {
+            return device.createRfcommSocketToServiceRecord(uuid);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
