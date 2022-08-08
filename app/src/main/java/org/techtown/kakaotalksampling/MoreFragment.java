@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -29,18 +30,12 @@ import java.util.Set;
 import java.util.UUID;
 
 public class MoreFragment extends Fragment {
-
+    private final static int REQUEST_ENABLED_BT = 101;
     TextView btStatus;
     Button btLED;
-    public BluetoothAdapter bluetoothAdapter;
-    public Set<BluetoothDevice> mDevices;
-    private BluetoothSocket bSocket;
-    private OutputStream mOutputStream;
-    private InputStream mInputStream;
-    private BluetoothDevice mRemoteDevice;
-    public boolean onBT = false;
-    public byte[] sendByte = new byte[4];
-    private static final int REQUEST_ENABLE_BT = 1;
+    BluetoothAdapter btAdapter;
+
+
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -52,10 +47,24 @@ public class MoreFragment extends Fragment {
         btLED.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                checkBTPermission(v.getContext());
 
             }
         });
         return v;
+    }
+
+    public void checkBTPermission(Context context) {
+        btAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (!btAdapter.isEnabled()) {
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT)
+                    != PackageManager.PERMISSION_GRANTED) {
+                btStatus.setText("상태: 블루투스 권한 없음.");
+                return;
+            }
+            startActivityForResult(enableIntent, REQUEST_ENABLED_BT);
+        }
     }
 
 
