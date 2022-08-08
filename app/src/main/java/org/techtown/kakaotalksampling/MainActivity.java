@@ -28,7 +28,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     ActionBar abar;
-    String[] permissionList = {Manifest.permission.BLUETOOTH_CONNECT};
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -70,7 +69,13 @@ public class MainActivity extends AppCompatActivity {
         //위험 권한 부여
         checkPermission();
         //블루투스 권한 부여
-        ActivityCompat.requestPermissions(this, permissionList, 1);
+        String[] permissionList = {
+                Manifest.permission.BLUETOOTH_SCAN,
+                Manifest.permission.BLUETOOTH_ADVERTISE,
+                Manifest.permission.BLUETOOTH_CONNECT
+        };
+        ActivityCompat.requestPermissions(this, permissionList, 101);
+        //
 
         abar = getSupportActionBar();
 
@@ -125,8 +130,7 @@ public class MainActivity extends AppCompatActivity {
             AndPermission.with(this)
                     .runtime()
                     .permission(Permission.READ_CALL_LOG, Permission.READ_CONTACTS,
-                            Permission.READ_PHONE_NUMBERS, Permission.READ_SMS, Permission.RECEIVE_SMS,
-                            Permission.ACCESS_FINE_LOCATION, Permission.ACCESS_COARSE_LOCATION)
+                            Permission.READ_PHONE_NUMBERS, Permission.READ_SMS, Permission.RECEIVE_SMS)
                     .onGranted(new Action<List<String>>() {
                         @Override
                         public void onAction(List<String> permissions) {
@@ -146,8 +150,7 @@ public class MainActivity extends AppCompatActivity {
             AndPermission.with(this)
                     .runtime()
                     .permission(Permission.READ_CALL_LOG, Permission.READ_CONTACTS,
-                            Permission.READ_PHONE_STATE, Permission.READ_SMS, Permission.RECEIVE_SMS,
-                            Permission.ACCESS_FINE_LOCATION, Permission.ACCESS_COARSE_LOCATION)
+                            Permission.READ_PHONE_STATE, Permission.READ_SMS, Permission.RECEIVE_SMS)
                     .onGranted(new Action<List<String>>() {
                         @Override
                         public void onAction(List<String> permissions) {
