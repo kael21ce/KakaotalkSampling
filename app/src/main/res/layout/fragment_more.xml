@@ -235,90 +235,40 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/gameButton"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:layout_marginEnd="5dp"
-                android:backgroundTint="#FFFFFF"
-                android:text="게임"
-                android:textColor="#000000" />
-
-            <Button
-                android:id="@+id/fashionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:layout_marginEnd="5dp"
-                android:backgroundTint="#FFFFFF"
-                android:text="패션"
-                android:textColor="#000000" />
-
-            <Button
-                android:id="@+id/orderButton"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:layout_marginEnd="5dp"
-                android:backgroundTint="#FFFFFF"
-                android:text="주문하기"
-                android:textColor="#000000" />
-
-            <Button
-                android:id="@+id/melonButton"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:backgroundTint="#FFFFFF"
-                android:text="멜론티켓"
-                android:textColor="#000000" />
-        </TableRow>
+            android:layout_height="match_parent"/>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/mapButton"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:layout_marginEnd="5dp"
-                android:backgroundTint="#FFFFFF"
-                android:text="카카오맵"
-                android:textColor="#000000" />
-
-            <Button
-                android:id="@+id/openchattingButton"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:layout_marginEnd="5dp"
-                android:backgroundTint="#FFFFFF"
-                android:text="오픈채팅"
-                android:textColor="#000000" />
-
-            <Button
-                android:id="@+id/cardButton"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:layout_marginEnd="5dp"
-                android:backgroundTint="#FFFFFF"
-                android:text="톡명함"
-                android:textColor="#000000" />
-
-            <Button
-                android:id="@+id/wholeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:backgroundTint="#FFFFFF"
-                android:text="전체서비스"
-                android:textColor="#000000" />
-
-        </TableRow>
+            android:layout_height="match_parent"/>
     </TableLayout>
+
+    <LinearLayout
+        android:id="@+id/dbLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/getButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#3F51B5"
+            android:text="데이터 가져오기" />
+
+        <TextView
+            android:id="@+id/gotText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="가져온 데이터"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/weatherLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
         android:orientation="vertical">
 
         <Button

@@ -28,10 +28,14 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,6 +60,8 @@ public class MoreFragment extends Fragment {
     BluetoothSocket btSocket;
     BluetoothDevice device;
     ConnectedThread connectedThread;
+    Button getButton;
+    TextView gotText;
     boolean flag;
 
     //database 생성
@@ -91,6 +97,28 @@ public class MoreFragment extends Fragment {
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
+        //
+        gotText = v.findViewById(R.id.gotText);
+        getButton = v.findViewById(R.id.getButton);
+        getButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.collection("users")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        gotText.setText(document.getData().toString()+"\n");
+                                    }
+                                } else {
+                                    gotText.setText("데이터 불러오는 중 에러 발생: "+task.getException());
+                                }
+                            }
+                        });
+            }
+        });
         //
 
         btStatus = v.findViewById(R.id.btStatus);
