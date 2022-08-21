@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "29623323496",
+    "project_id": "kakaotalksampling",
+    "storage_bucket": "kakaotalksampling.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:29623323496:android:1229c12b0d48a6cc8564dd",
+        "android_client_info": {
+          "package_name": "org.techtown.kakaotalksampling"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "29623323496-0r7dfmq4ud2r88pq32bbf9dvl2uvql5e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9sOPGasOPdIknuN7E2Ot9oLqoo_27uzY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "29623323496-0r7dfmq4ud2r88pq32bbf9dvl2uvql5e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
