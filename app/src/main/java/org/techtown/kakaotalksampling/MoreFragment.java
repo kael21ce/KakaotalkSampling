@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -55,7 +57,8 @@ public class MoreFragment extends Fragment {
     BluetoothDevice device;
     ConnectedThread connectedThread;
     Button getButton;
-    TextView gotText;
+    EditText gotText;
+    TextView text4Test;
     boolean flag;
 
     //database 생성
@@ -116,9 +119,11 @@ public class MoreFragment extends Fragment {
         //
         gotText = v.findViewById(R.id.gotText);
         getButton = v.findViewById(R.id.getButton);
+        text4Test = v.findViewById(R.id.text4Test);
         getButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String string = gotText.getText().toString();
                 db.collection("users")
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -128,10 +133,14 @@ public class MoreFragment extends Fragment {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         Map<String, Object> data = document.getData();
                                         String userName = data.get("name").toString();
-                                        String userBirth = data.get("name").toString();
                                         String userMobile = data.get("mobile").toString();
-                                        gotText.setText("이름: "+userName+"\n"+"생년월일: "+userBirth+"\n"
-                                        +"전화번호: "+userMobile);
+                                        assert userName != null;
+                                        if (userName.equals(string)) {
+                                            text4Test.setText("전화번호: "+userMobile);
+                                            break;
+                                        } else {
+                                            text4Test.setText("해당하는 이름이 존재하지 않습니다.");
+                                        }
                                     }
                                 } else {
                                     gotText.setText("데이터 불러오는 중 에러 발생: "+task.getException());
@@ -177,7 +186,7 @@ public class MoreFragment extends Fragment {
                             deviceLocalArrayList.clear();
                         }
                         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-                        getActivity().registerReceiver(receiver, filter);
+                        requireActivity().registerReceiver(receiver, filter);
 
                     } else {
                         Toast.makeText(v.getContext(), "블루투스가 켜지지 않았습니다.",
@@ -274,7 +283,7 @@ public class MoreFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
 
-        getActivity().unregisterReceiver(receiver);
+        requireActivity().unregisterReceiver(receiver);
     }
 
     //createBluetoothSocket 메서드
