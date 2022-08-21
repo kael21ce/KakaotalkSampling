@@ -1,8 +1,6 @@
 package org.techtown.kakaotalksampling;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -13,8 +11,6 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,8 +34,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,10 +72,10 @@ public class MoreFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_more, container, false);
 
         //
-        Map<String, Object> user = new HashMap<>();
-        user.put("name", "장형준");
-        user.put("birth", "20020510");
-        user.put("mobile", "01046076705");
+        Map<String, Object> user1 = new HashMap<>();
+        user1.put("name", "장형준");
+        user1.put("birth", "20020510");
+        user1.put("mobile", "01046076705");
 
         db.collection("users")
                 .add(user)
@@ -97,6 +91,7 @@ public class MoreFragment extends Fragment {
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
+
         //
         gotText = v.findViewById(R.id.gotText);
         getButton = v.findViewById(R.id.getButton);
@@ -110,7 +105,12 @@ public class MoreFragment extends Fragment {
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
-                                        gotText.setText(document.getData().toString()+"\n");
+                                        Map<String, Object> data = document.getData();
+                                        String userName = data.get("name").toString();
+                                        String userBirth = data.get("name").toString();
+                                        String userMobile = data.get("mobile").toString();
+                                        gotText.setText("이름: "+userName+"\n"+"생년월일: "+userBirth+"\n"
+                                        +"전화번호: "+userMobile);
                                     }
                                 } else {
                                     gotText.setText("데이터 불러오는 중 에러 발생: "+task.getException());
