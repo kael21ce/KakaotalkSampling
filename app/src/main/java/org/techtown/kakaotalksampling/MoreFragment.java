@@ -75,48 +75,6 @@ public class MoreFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_more, container, false);
 
         //
-        Map<String, Object> user1 = new HashMap<>();
-        user1.put("name", "장형준");
-        user1.put("birth", "20020510");
-        user1.put("mobile", "01046076705");
-
-        Map<String, Object> user2 = new HashMap<>();
-        user2.put("name", "홍길동");
-        user2.put("birth", "20000909");
-        user2.put("mobile", "01000000000");
-
-
-        db.collection("users")
-                .add(user1)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: "+documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
-
-        db.collection("users")
-                .add(user2)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: "+documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
-
-        //
         gotText = v.findViewById(R.id.gotText);
         getButton = v.findViewById(R.id.getButton);
         text4Test = v.findViewById(R.id.text4Test);
