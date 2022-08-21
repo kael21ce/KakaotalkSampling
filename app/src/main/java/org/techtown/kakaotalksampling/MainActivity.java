@@ -19,6 +19,7 @@ import android.widget.Toolbar;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 Manifest.permission.BLUETOOTH_CONNECT
         };
         ActivityCompat.requestPermissions(this, permissionList, 101);
-        //
+
 
         abar = getSupportActionBar();
 
