@@ -23,7 +23,7 @@ public class ScaleFragment extends Fragment {
     ScaleInfo scaleInfo;
     TextView infoList;
     //전화번호 설정
-    String mobile = "01071816705";
+    String mobile = "01065515413";
     //
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -50,14 +50,14 @@ public class ScaleFragment extends Fragment {
         activate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Integer numI = scaleInfo.getIncomingNum(v.getContext(), "01071816705");
-                Integer numO = scaleInfo.getOutgoingNum(v.getContext(), "01071816705");
-                Integer snumI = scaleInfo.getInboxNum(v.getContext(), "01071816705");
-                Integer numS = scaleInfo.getSentNum(v.getContext(), "01071816705");
+                Integer numI = scaleInfo.getIncomingNum(v.getContext(), "01065515413");
+                Integer numO = scaleInfo.getOutgoingNum(v.getContext(), "01065515413");
+                Integer snumI = scaleInfo.getInboxNum(v.getContext(), "01065515413");
+                Integer numS = scaleInfo.getSentNum(v.getContext(), "01065515413");
                 incoming.setText("수신: 통화-" + numI.toString()+" / SMS-"+snumI.toString());
                 outgoing.setText("발신: 통화-" + numO.toString()+" / SMS-"+numS.toString());
-                absContact.setText("연락 횟수 차: "+scaleInfo.betContact(v.getContext(), "01071816705"));
-                rotateScale(v.getContext(), "01071816705");
+                absContact.setText("연락 횟수 차: "+scaleInfo.betContact(v.getContext(), "01065515413"));
+                rotateScale(v.getContext(), "01065515413");
 
             }
         });
